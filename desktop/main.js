@@ -70,7 +70,45 @@ ipcMain.handle('file:save', async (e, { path: p, name, text }) => {
   await fs.promises.writeFile(target, text, 'utf8');
   return { path: target, name: path.basename(target) };
 });
+// any other file (PDF, Word, PowerPoint, picture, notes): normal "Save as" window
+ipcMain.handle('file:saveBytes', async (e, { name, data }) => {
+  const ext = (name.split('.').pop() || '').toLowerCase();
+  const kinds = { pdf: 'PDF document', pptx: 'PowerPoint presentation', docx: 'Word document', png: 'Picture', txt: 'Text notes', likhi: 'Likhi board' };
+  const r = await dialog.showSaveDialog(BrowserWindow.fromWebContents(e.sender), {
+    title: 'Save as', defaultPath: path.join(app.getPath('documents'), name),
+    filters: kinds[ext] ? [{ name: kinds[ext], extensions: [ext] }, { name: 'All files', extensions: ['*'] }] : [{ name: 'All files', extensions: ['*'] }]
+  });
+  if (r.canceled || !r.filePath) return null;
+  await fs.promises.writeFile(r.filePath, Buffer.from(data));
+  return { path: r.filePath, name: path.basename(r.filePath) };
+});
 ipcMain.handle('file:write', async (e, p, text) => { try { await fs.promises.writeFile(p, text, 'utf8'); return true; } catch (err) { return false; } });
+// v1.3: every board saves itself straight away into Documents\Likhi — no "save first" needed
+const autoDir = () => path.join(app.getPath('documents'), 'Likhi');
+const inAutoDir = p => { const d = path.resolve(autoDir()) + path.sep; return typeof p === 'string' && path.resolve(p).toLowerCase().startsWith(d.toLowerCase()); };
+const cleanName = n => (String(n || 'Board').replace(/\.likhi$/i, '').replace(/[\\/:*?"<>|]/g, '-').trim() || 'Board').slice(0, 120);
+async function freePath(base, except) {
+  await fs.promises.mkdir(autoDir(), { recursive: true });
+  for (let i = 1; i < 1000; i++) {
+    const p = path.join(autoDir(), base + (i > 1 ? ` (${i})` : '') + '.likhi');
+    if (except && path.resolve(p).toLowerCase() === path.resolve(except).toLowerCase()) return p;
+    try { await fs.promises.access(p); } catch (err) { return p; }
+  }
+  return path.join(autoDir(), base + ' ' + Date.now() + '.likhi');
+}
+ipcMain.handle('file:autoPath', async (e, name) => {
+  try { const p = await freePath(cleanName(name)); await fs.promises.writeFile(p, '', { flag: 'wx' }).catch(() => {}); return { path: p, name: path.basename(p) }; } catch (err) { return null; }
+});
+// rename / delete only touch files Likhi made itself in Documents\Likhi
+ipcMain.handle('file:rename', async (e, p, name) => {
+  if (!inAutoDir(p)) return null;
+  try { const np = await freePath(cleanName(name), p); if (path.resolve(np) !== path.resolve(p)) await fs.promises.rename(p, np); return { path: np, name: path.basename(np) }; } catch (err) { return null; }
+});
+ipcMain.handle('file:remove', async (e, p) => {
+  if (!inAutoDir(p)) return false;
+  try { await fs.promises.unlink(p); return true; } catch (err) { return false; }
+});
+ipcMain.on('file:show', (e, p) => { if (typeof p === 'string' && p) shell.showItemInFolder(p); });
 ipcMain.handle('file:open', async e => {
   const r = await dialog.showOpenDialog(BrowserWindow.fromWebContents(e.sender), { title: 'Open board', defaultPath: app.getPath('documents'), filters: likhiFilter, properties: ['openFile'] });
   if (r.canceled || !r.filePaths[0]) return null;

@@ -4,7 +4,12 @@ contextBridge.exposeInMainWorld('likhiDesktop', {
   // files
   saveFile: opts => ipcRenderer.invoke('file:save', opts),          // { path?, name, text } -> { path, name } | null
   writeFile: (path, text) => ipcRenderer.invoke('file:write', path, text),
-  openFile: () => ipcRenderer.invoke('file:open'),                  // -> { path, name, text } | null
+  saveBytes: opts => ipcRenderer.invoke('file:saveBytes', opts),        // { name, data:Uint8Array } -> { path, name } | null
+  openFile: () => ipcRenderer.invoke('file:open'),
+  autoPath: name => ipcRenderer.invoke('file:autoPath', name),     // new file in Documents\Likhi -> { path, name }
+  renameFile: (path, name) => ipcRenderer.invoke('file:rename', path, name),
+  removeFile: path => ipcRenderer.invoke('file:remove', path),       // only files inside Documents\Likhi
+  showFile: path => ipcRenderer.send('file:show', path),                  // -> { path, name, text } | null
   onOpenFile: cb => ipcRenderer.on('open-file', (e, name, text, path) => cb(name, text, path)),
   // closing the window
   onCloseRequest: cb => ipcRenderer.on('app:close-request', () => cb()),
