@@ -69,7 +69,7 @@ body.dark #brand .name{color:var(--chalk)}
 @media (max-width:900px){#zoombar .hide-sm{display:none}}
 
 /* popovers */
-.pop{position:fixed;z-index:40;background:var(--ui-bg);border:1px solid var(--ui-border);box-shadow:var(--shadow);
+.pop{position:fixed;z-index:56;background:var(--ui-bg);border:1px solid var(--ui-border);box-shadow:var(--shadow);
   border-radius:16px;padding:14px;width:340px;max-width:calc(100vw - 20px);max-height:calc(100vh - 20px);overflow:auto;
   display:none}
 .pop.show{display:block;animation:pop .14s ease-out}
@@ -262,6 +262,78 @@ body.overlay.passthru #overlay{pointer-events:none}
   body.dock-bottom #pagebar{bottom:auto;top:14px}
 }
 @media (max-width:760px){ .btn{width:40px;height:40px} #brand .name{display:none} }
+
+/* big toolbar */
+body.bigtools #dock .btn,body.bigtools #zoombar .btn,body.bigtools #pagebar .btn{width:58px;height:58px}
+body.bigtools .btn svg{transform:scale(1.15)}
+.xrow{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+/* dashboard */
+#dash{position:fixed;inset:0;z-index:45;background:var(--ui-bg-2);display:none;flex-direction:column;overflow:auto}
+#dash.show{display:flex}
+.dhead{display:flex;align-items:center;gap:10px;padding:14px 28px;background:#1F4D3A;color:#F7F3E8;position:sticky;top:0;z-index:2}
+.dlogo{display:flex;align-items:center;gap:12px}
+.dlogo b{font-size:26px;letter-spacing:.4px;display:block;line-height:1}
+.dlogo small{font-size:13px;opacity:.75}
+.dhead .grow,.drow .grow{flex:1}
+.dbtn{height:42px;border-radius:11px;border:1px solid rgba(247,243,232,.25);background:rgba(247,243,232,.08);color:#F7F3E8;padding:0 14px;cursor:pointer;
+  display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px}
+.dbtn:hover{background:rgba(247,243,232,.18)}
+.dmain{padding:22px 28px 40px;max-width:1400px;width:100%;margin:0 auto;flex:1}
+.dmain h2{font-size:18px;margin:6px 0 14px}
+.dmain h2 small{color:var(--ui-muted);font-weight:600;margin-left:6px}
+.nbrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin-bottom:30px}
+.nb{border:1px solid var(--ui-border);background:var(--ui-bg);border-radius:14px;padding:8px;cursor:pointer;display:flex;flex-direction:column;gap:8px;
+  align-items:stretch;text-align:left;font-size:14px;transition:transform .12s,box-shadow .12s}
+.nb:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.nbprev{aspect-ratio:16/10;border-radius:9px;border:1px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--ui-muted)}
+.nbprev svg{width:100%;height:100%}
+.nb b{padding:0 4px 2px}
+.drow{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.drow h2{margin:0}
+.dsearch{width:240px}
+.dsort{width:160px;height:40px}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.bcard{background:var(--ui-bg);border:1px solid var(--ui-border);border-radius:14px;overflow:hidden;cursor:pointer;position:relative;transition:transform .12s,box-shadow .12s}
+.bcard:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.bcard.cur{box-shadow:0 0 0 3px var(--accent)}
+.bthumb{aspect-ratio:16/9;background:#fff;display:flex;align-items:center;justify-content:center;color:#b5bdb8;border-bottom:1px solid var(--ui-border)}
+.bthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.binfo{padding:10px 44px 12px 12px}
+.binfo b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px}
+.binfo small{color:var(--ui-muted);font-size:12px}
+.bmore{position:absolute;right:6px;bottom:10px}
+.dempty{text-align:center;color:var(--ui-muted);padding:50px 0}
+.dfoot{text-align:center;color:var(--ui-muted);font-size:13px;padding:16px}
+.dfoot a{color:inherit}
+/* settings */
+#settings{position:fixed;inset:0;z-index:50;background:rgba(10,20,15,.42);display:none;align-items:center;justify-content:center}
+#settings.show{display:flex}
+.sbox{width:880px;max-width:calc(100vw - 24px);height:620px;max-height:calc(100vh - 24px);background:var(--ui-bg);border-radius:20px;box-shadow:var(--shadow);display:flex;overflow:hidden;position:relative}
+.sbox nav{width:220px;background:var(--ui-bg-2);padding:16px 10px;display:flex;flex-direction:column;gap:2px;flex:none}
+.sbox nav button{display:flex;align-items:center;gap:10px;border:0;background:transparent;padding:11px 12px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;text-align:left}
+.sbox nav button:hover{background:var(--ui-hover)}
+.sbox nav button.on{background:var(--accent);color:var(--accent-text)}
+.sbox nav .grow{flex:1}
+.sver{color:var(--ui-muted);padding:0 12px}
+.sbox section{flex:1;overflow:auto;padding:22px 28px 28px}
+.sbox section h3{margin:0 0 12px;font-size:19px}
+.sclose{position:absolute;top:10px;right:10px}
+.devinfo{display:grid;gap:4px;font-size:13px;background:var(--ui-bg-2);border-radius:12px;padding:12px;margin-top:6px}
+.devinfo div,.credits div{display:grid;grid-template-columns:140px 1fr;gap:10px}
+.devinfo span{word-break:break-word;color:var(--ui-muted)}
+.devout{background:#111a16;color:#bfe8cf;border-radius:10px;padding:10px;font-size:12px;white-space:pre-wrap;min-height:20px;max-height:180px;overflow:auto;margin-top:10px}
+.devout:empty{display:none}
+.about{text-align:center;padding:6px 0 10px}
+.about h2{margin:6px 0 0;font-size:30px;color:var(--green)}
+body.dark .about h2{color:var(--chalk)}
+.about .ver{margin:4px 0;color:var(--ui-muted);font-weight:600}
+.about .tag{margin:0;color:var(--ui-muted)}
+.credits{display:grid;gap:8px;font-size:14px;margin-bottom:16px}
+.credits span{color:var(--ui-muted)}
+.news{margin:0 0 14px;padding-left:20px;line-height:1.7;font-size:14px}
+@media (max-width:700px){.sbox{flex-direction:column}.sbox nav{width:auto;flex-direction:row;overflow:auto}.sbox nav span{display:none}.sver{display:none}}
+#perf{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:90;background:rgba(17,26,22,.88);color:#e8f2ec;font:600 12px ui-monospace,Consolas,monospace;
+  padding:6px 12px;border-radius:9px;pointer-events:none;white-space:nowrap}
 </style>
 </head>
 <body class="dock-bottom tool-pen">
@@ -271,7 +343,7 @@ body.overlay.passthru #overlay{pointer-events:none}
   <canvas id="overlay"></canvas>
 </div>
 
-<div id="brand" class="float" title="Likhi menu">
+<div id="brand" class="float" title="Dashboard — all your boards">
   <svg width="30" height="30" viewBox="0 0 44 44"><rect x="2" y="2" width="40" height="40" rx="10" fill="#1F4D3A"/><path d="M11 30 C15 18, 19 14, 21 24 S 28 30, 33 14" stroke="#F7F3E8" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="33" cy="14" r="3" fill="#F2C94C"/></svg>
   <span class="name">likhi</span><span class="fname" id="fileName"></span><span class="save" id="saveState"></span>
 </div>
@@ -291,6 +363,10 @@ body.overlay.passthru #overlay{pointer-events:none}
 <div id="popTools" class="pop" style="width:400px"></div>
 <div id="popTpl" class="pop" style="width:420px"></div>
 <div id="popInsert" class="pop"></div>
+<div id="popBoard" class="pop" style="width:270px"></div>
+<div id="popDashTpl" class="pop" style="width:420px"></div>
+<div id="dash"></div>
+<div id="settings"></div>
 
 <div id="pages">
   <div class="head"><b>Pages</b><button class="wide" style="width:auto;padding:0 14px" id="pgAddEnd"></button><button class="btn sm" id="pgClose"></button></div>
@@ -337,6 +413,8 @@ function luminance(hex) { const [r, g, b] = hexToRgb(hex); return (0.2126 * r + 
 const isDark = hex => luminance(hex) < 0.45;
 
 // ---------- constants ----------
+const APP_VERSION = '1.1.0', APP_BUILD = '2026-11-17';
+const APP_CREDITS = { by: 'The Likhi team', tagline: 'The board, reimagined.' };
 const PAGE_W = 1920, PAGE_H = 1080;
 const PENS = {
   hard:   { name: 'Pen',         icon: 'Pen',        color: '#111111', w: 4 },
@@ -367,7 +445,7 @@ const App = {
   presets: LS.get('presets', DEFAULT_PRESETS.slice()),
   eraser: LS.get('eraser', { mode: 'point', size: 28 }),
   laser: Object.assign({ color: '#FF2D2D', w: 6, stay: 3 }, LS.get('laser', {})),
-  settings: Object.assign({ smoothing: 2, palm: true, penOnly: false, dark: false, dock: 'bottom' }, LS.get('settings', {})),
+  settings: Object.assign({ smoothing: 2, palm: true, penOnly: false, dark: false, dock: 'bottom', sound: false, volume: 0.6, start: 'dashboard', bigTools: false, perf: false, newBg: { color: '#FFFFFF', pattern: 'none' } }, LS.get('settings', {})),
   views: new Map(),
   dirtyScene: true, dirtyBg: true, dirtyOverlay: true,
   listeners: {}
@@ -449,7 +527,7 @@ function chalkPattern(ctx, color) {
   const S = 96, c = document.createElement('canvas'); c.width = c.height = S;
   const g = c.getContext('2d'), img = g.createImageData(S, S), [r, gg, b] = hexToRgb(color), rnd = rng(hashStr(color) + 11);
   for (let i = 0; i < S * S; i++) {
-    const v = rnd(); const a = v < 0.22 ? v * 300 : 190 + rnd() * 65;
+    const v = rnd(); const a = v < 0.42 ? v * 60 : 150 + rnd() * 105;
     img.data[i * 4] = r; img.data[i * 4 + 1] = gg; img.data[i * 4 + 2] = b; img.data[i * 4 + 3] = a;
   }
   g.putImageData(img, 0, 0);
@@ -491,6 +569,7 @@ function strokeGeom(o) {
     case 'bamboo': { const f = new Path2D(); nibPath(f, p); g.fill = f; const s = new Path2D(); pathSmooth(s, p); g.stroke = s; g.lw = Math.max(1, o.w * 0.16); break; }
     case 'tex': { const f = new Path2D(); stampsPath(f, o); g.fill = f; break; }
     case 'magic': g.chunks = rainbowChunks(p, o.h0 || 0); break;
+    case 'chalk': Object.assign(g, chalkGeom(o)); break;
     default: { const s = new Path2D(); pathSmooth(s, p); g.stroke = s; g.lw = o.w; }
   }
   return g;
@@ -511,9 +590,40 @@ function drawStroke(ctx, o, noCache) {
     if (g.fill) ctx.fill(g.fill);
     if (g.fill2) ctx.fill(g.fill2);
     if (g.stroke) { ctx.lineWidth = g.lw; ctx.stroke(g.stroke); }
-    if (o.pen === 'chalk' && g.stroke) { ctx.globalAlpha = 0.35; ctx.lineWidth = o.w * 0.45; ctx.stroke(g.stroke); }
+    if (g.rough) { ctx.lineCap = 'butt'; ctx.globalAlpha = 0.7; ctx.lineWidth = o.w * 0.55; ctx.stroke(g.rough); ctx.globalAlpha = 0.75; ctx.fillStyle = o.c; ctx.fill(g.dust); }
   }
   ctx.restore();
+}
+
+// chalk: no smoothing — a jittery, grainy line with broken edges and a little dust
+function chalkGeom(o) {
+  const src = o.p, w = o.w, seed = (o.sd || hashStr(o.id || 'x')) >>> 0, rnd = rng(seed), rd = rng((seed + 99991) >>> 0);
+  // walk the line in small even steps so the roughness looks the same however fast you drew
+  const P = [], step = Math.max(1.2, w * 0.45);
+  for (let i = 0; i < src.length / 3; i++) {
+    const x = src[i * 3], y = src[i * 3 + 1];
+    if (!P.length) { P.push(x, y); continue; }
+    const lx = P[P.length - 2], ly = P[P.length - 1], d = Math.hypot(x - lx, y - ly);
+    if (d < step) { if (i === src.length / 3 - 1) P.push(x, y); continue; }
+    const k = Math.floor(d / step); for (let j = 1; j <= k; j++) P.push(lx + (x - lx) * j / k, ly + (y - ly) * j / k);
+  }
+  const n = P.length / 2, main = new Path2D(), rough = new Path2D(), dust = new Path2D(), j = w * 0.24, j2 = w * 0.55;
+  for (let i = 0; i < n; i++) {
+    const x = P[i * 2], y = P[i * 2 + 1];
+    const mx = x + (rnd() - 0.5) * j, my = y + (rnd() - 0.5) * j; i ? main.lineTo(mx, my) : main.moveTo(mx, my);
+    const rx = x + (rnd() - 0.5) * j2, ry = y + (rnd() - 0.5) * j2;
+    // the rough edge pass skips bits now and then, like chalk catching on the board
+    if (i && rnd() < 0.18) rough.moveTo(rx, ry); else i ? rough.lineTo(rx, ry) : rough.moveTo(rx, ry);
+  }
+  if (n === 1) main.lineTo(P[0] + 0.01, P[1]);
+  for (let i = 0; i < n; i++) {
+    const cnt = rd() < 0.7 ? 1 : 2;
+    for (let c = 0; c < cnt; c++) {
+      const a = rd() * Math.PI * 2, r = w * (0.45 + rd() * 0.7), s = 0.6 + rd() * Math.max(1, w * 0.16);
+      dust.rect(P[i * 2] + Math.cos(a) * r, P[i * 2 + 1] + Math.sin(a) * r, s, s);
+    }
+  }
+  return { stroke: main, lw: w, rough, dust };
 }
 
 // variable width (ink brush): one outline polygon (body) + round caps
@@ -722,7 +832,7 @@ let sceneV = null, panIdle = 0;
 let rafId = 0;
 function schedule() { if (!rafId) rafId = requestAnimationFrame(frame); }
 function frame() {
-  rafId = 0;
+  rafId = 0; const t0 = performance.now();
   if (App.dirtyBg) { renderBg(); App.dirtyBg = false; }
   if (App.dirtyScene) {
     const v = view();
@@ -737,6 +847,7 @@ function frame() {
     App.dirtyScene = false; App.sceneFull = false; App.dirtyRect = null;
   }
   if (App.dirtyOverlay || liveActive()) { App.dirtyOverlay = false; renderOverlay(); }
+  App.lastFrameMs = performance.now() - t0;
   if (liveActive()) schedule();
 }
 
@@ -860,8 +971,9 @@ function startStroke(e) {
   const s = {
     pen, c: pref.color, w: w0, tex: pref.tex, ptype: e.pointerType, usesPressure,
     pts: [x, y, startWidth(pen, w0, e)], sx: x, sy: y, rx: x, ry: y, t: e.timeStamp, wc: startWidth(pen, w0, e), pred: null,
-    h0: pen === 'magic' ? Math.floor(Math.random() * 600) : 0, snap
+    h0: pen === 'magic' ? Math.floor(Math.random() * 600) : 0, snap, sd: (Math.random() * 4e9) >>> 0
   };
+  s.snd = typeof penSoundStart === 'function' ? penSoundStart(pen) : null;
   live.set(e.pointerId, s); schedule();
 }
 function startWidth(pen, w, e) {
@@ -874,7 +986,7 @@ function addPoint(s, e) {
   let [rx, ry] = toWorld(e.clientX, e.clientY);
   if (s.snap) [rx, ry] = applySnap(s.snap, rx, ry, s.w);
   s.rx = rx; s.ry = ry;
-  const a = s.snap ? 1 : (SMOOTH[App.settings.smoothing] ?? 0.42);
+  const a = s.snap || s.pen === 'chalk' ? 1 : (SMOOTH[App.settings.smoothing] ?? 0.42);
   const x = s.sx + (rx - s.sx) * a, y = s.sy + (ry - s.sy) * a;
   const n = s.pts.length, lx = s.pts[n - 3], ly = s.pts[n - 2], d = Math.hypot(x - lx, y - ly);
   const z = view().zoom;
@@ -888,12 +1000,14 @@ function addPoint(s, e) {
   } else if (s.pen === 'bamboo' && s.usesPressure) {
     s.wc += (s.w * (0.5 + e.pressure * 0.8) - s.wc) * 0.3; w = s.wc;
   }
+  if (s.snd) penSoundUpdate(s.snd, (d * z) / Math.max(1, e.timeStamp - s.t));
   s.t = e.timeStamp;
   s.pts.push(x, y, w);
 }
 
 function finishStroke(id, cancel) {
   const s = live.get(id); live.delete(id); if (!s) return;
+  if (s.snd) penSoundStop(s.snd);
   if (s.laser) { s.laser.end = now(); laserActive = now(); schedule(); return; }
   if (cancel) { invalidate(); return; }
   let p = s.pts;
@@ -901,9 +1015,10 @@ function finishStroke(id, cancel) {
   const n = p.length / 3, lx = p[(n - 1) * 3], ly = p[(n - 1) * 3 + 1];
   if (Math.hypot(s.rx - lx, s.ry - ly) * view().zoom > 0.75) p.push(s.rx, s.ry, p[(n - 1) * 3 + 2]);
   if (s.pen === 'ink') taper(p);
-  else if (s.pen !== 'bamboo') p = simplify(p, 0.3 / view().zoom);
+  else if (s.pen !== 'bamboo' && s.pen !== 'chalk') p = simplify(p, 0.3 / view().zoom);
   for (let i = 0; i < p.length; i++) p[i] = r1(p[i]);
   let o = { t: 's', id: uid(), pen: s.pen, c: s.c, w: s.w, p };
+  if (s.pen === 'chalk') o.sd = s.sd;
   if (App.settings.recog && (s.pen === 'hard' || s.pen === 'chalk')) {
     const sh = recognize(p, s.c, s.w);
     if (sh) { commit(() => setObjects([...curPage().objects, sh])); invalidate(); return; }
@@ -943,7 +1058,7 @@ function drawLive(c) {
     // show the stroke up to the real finger position (+ prediction) so it never feels behind
     const extra = [s.rx, s.ry]; if (s.pred) extra.push(...s.pred);
     const lw = p[p.length - 1]; p = p.concat(...chunk3(extra, lw));
-    const o = { t: 's', pen: s.pen, c: s.c, w: s.w, p, tex: s.tex, h0: s.h0 };
+    const o = { t: 's', pen: s.pen, c: s.c, w: s.w, p, tex: s.tex, h0: s.h0, sd: s.sd };
     drawStroke(c, o, true);
   }
   // lasers: stay on screen while in use; after N idle seconds they vanish one by one, oldest first
@@ -1379,48 +1494,29 @@ function buildBgPop() {
 function setBg(change) {
   const before = curPage().bg; const nb = { ...before, ...change };
   commit(() => replacePage(App.cur, p => ({ ...p, bg: nb })));
-  // keep the pen readable on dark / light boards
-  if (change.color && isDark(nb.color) !== isDark(before.color)) {
-    let switched = false;
-    for (const k of ['hard', 'ink', 'bamboo', 'chalk', 'tex']) {
-      const pr = App.penPrefs[k];
-      if (isDark(nb.color) && luminance(pr.color) < 0.25) { pr.color = '#F7F3E8'; switched = true; }
-      else if (!isDark(nb.color) && luminance(pr.color) > 0.85) { pr.color = '#111111'; switched = true; }
-    }
-    if (switched) { savePrefs(); refreshDock(); toast(isDark(nb.color) ? 'Pens switched to chalk white' : 'Pens switched to black'); }
-  }
+  if (change.color && isDark(nb.color) !== isDark(before.color)) adaptPens(nb.color, true);
   buildBgPop();
 }
 
 // ---------- menu & settings ----------
 function buildMenuPop() {
-  const pop = $('#popMenu'), S = App.settings, fs = !!document.fullscreenElement;
-  const sw = (key, title, sub) => `<div class="set-row"><div class="t">${title}${sub ? `<small>${sub}</small>` : ''}</div><button class="switch ${S[key] ? 'on' : ''}" data-sw="${key}" aria-label="${title}"></button></div>`;
+  const pop = $('#popMenu'), fs = !!document.fullscreenElement;
   const mi = (id, ic, t, k) => `<button class="menu-item" id="${id}">${icon(ic)}<span class="grow">${t}</span>${k ? `<small style="color:var(--ui-muted)">${k}</small>` : ''}</button>`;
   pop.innerHTML =
-    mi('mNew', 'FilePlus2', 'New board') + mi('mOpen', 'FolderOpen', 'Open…', 'Ctrl+O') + mi('mSave', 'Save', 'Save', 'Ctrl+S') + mi('mSaveAs', 'Save', 'Save as…') +
-    '<h4 style="margin-top:12px">Share</h4>' +
-    mi('mPng', 'Image', 'Save this page as a picture') + mi('mPdf', 'FileText', 'Save all pages as PDF') + mi('mPrint', 'Printer', 'Print', 'Ctrl+P') + mi('mMail', 'Mail', 'Send by email') +
-    '<h4 style="margin-top:12px">Board</h4>' +
-    mi('mFull', fs ? 'Shrink' : 'Expand', fs ? 'Exit full screen' : 'Full screen') +
-    '<h4 style="margin-top:14px">Writing</h4>' +
-    `<div class="set-row"><div class="t">Handwriting smoothing</div></div><div class="seg" id="segSmooth">${['Off', 'Low', 'High'].map((n, i) => `<button class="${S.smoothing === i ? 'on' : ''}" data-v="${i}">${n}</button>`).join('')}</div>` +
-    sw('palm', 'Palm rejection', 'Ignores your hand resting on the board') +
-    sw('penOnly', 'Pen only', 'Fingers can’t draw (stylus boards)') +
-    '<h4 style="margin-top:14px">Look</h4>' +
-    sw('dark', 'Dark mode', 'Dark toolbars') +
-    `<div class="set-row"><div class="t">Toolbar position</div></div><div class="seg" id="segDock">${[['left', 'PanelLeft', 'Left'], ['bottom', 'PanelBottom', 'Bottom'], ['right', 'PanelRight', 'Right']].map(([k, ic, n]) => `<button class="${S.dock === k ? 'on' : ''}" data-v="${k}">${icon(ic, 16)} ${n}</button>`).join('')}</div>` +
-    '<p class="hint" style="margin-top:14px;text-align:center">Likhi v1.0 · The board, reimagined.</p>';
-  $('#mNew').onclick = async () => {
-    closePops();
-    if (await confirmBox('Start a new board?', 'Your current board will be cleared. Save it first if you want to keep it.', 'New board', true)) newBoard();
-  };
+    mi('mDash', 'LayoutTemplate', 'Dashboard — all boards', 'Ctrl+O') + mi('mNew', 'FilePlus2', 'New board') + mi('mRen', 'Type', 'Rename this board') +
+    '<h4 style="margin-top:12px">Export this board as</h4><div class="xrow">' +
+    [['png', 'Picture'], ['pdf', 'PDF'], ['docx', 'Word'], ['pptx', 'PowerPoint'], ['txt', 'Notes'], ['likhi', 'Likhi file']].map(([k, n]) => `<button class="chip" data-x="${k}">${n}</button>`).join('') + '</div>' +
+    mi('mPrint', 'Printer', 'Print', 'Ctrl+P') + mi('mMail', 'Mail', 'Send by email') + mi('mOpen', 'FolderOpen', 'Open a board file (.likhi)') +
+    '<div style="height:8px"></div>' +
+    mi('mFull', fs ? 'Shrink' : 'Expand', fs ? 'Exit full screen' : 'Full screen') + mi('mSet', 'Settings', 'Settings') +
+    `<p class="hint" style="margin-top:10px;text-align:center">Likhi v${APP_VERSION} · ${APP_CREDITS.tagline}</p>`;
+  $('#mDash').onclick = showDashboard;
+  $('#mNew').onclick = () => { closePops(); newBoard(); };
+  $('#mRen').onclick = () => { closePops(); renameBoard(App.board.id); };
+  $$('[data-x]', pop).forEach(b => b.onclick = () => exportAs(b.dataset.x));
+  $('#mPrint').onclick = printBoard; $('#mMail').onclick = emailBoard; $('#mOpen').onclick = openBoard;
   $('#mFull').onclick = () => { closePops(); toggleFullscreen(); };
-  $('#mOpen').onclick = openBoard; $('#mSave').onclick = () => saveBoard(false); $('#mSaveAs').onclick = () => saveBoard(true);
-  $('#mPng').onclick = exportPagePNG; $('#mPdf').onclick = exportPDF; $('#mPrint').onclick = printBoard; $('#mMail').onclick = emailBoard;
-  $$('[data-sw]', pop).forEach(b => b.onclick = () => { S[b.dataset.sw] = !S[b.dataset.sw]; savePrefs(); applySettings(); buildMenuPop(); });
-  $$('#segSmooth button', pop).forEach(b => b.onclick = () => { S.smoothing = +b.dataset.v; savePrefs(); buildMenuPop(); });
-  $$('#segDock button', pop).forEach(b => b.onclick = () => { S.dock = b.dataset.v; savePrefs(); applySettings(); buildMenuPop(); placePop(pop, $('#tMenu')); });
+  $('#mSet').onclick = () => { closePops(); openSettings(); };
 }
 function toggleFullscreen() {
   const fail = () => toast('Full screen is not available here');
@@ -1428,12 +1524,13 @@ function toggleFullscreen() {
 }
 function applySettings() {
   const S = App.settings, b = document.body;
-  b.classList.toggle('dark', !!S.dark);
+  b.classList.toggle('dark', !!S.dark); b.classList.toggle('bigtools', !!S.bigTools);
+  if (typeof perfMeter === 'function') perfMeter(!!S.perf);
   b.classList.remove('dock-bottom', 'dock-left', 'dock-right'); b.classList.add('dock-' + S.dock);
   for (const [id, v] of App.views) if (v.fit) App.views.delete(id);
   clampView(); invalidate(true);
 }
-$('#brand').onclick = e => showPop($('#popMenu'), e.currentTarget, buildMenuPop);
+$('#brand').onclick = () => showDashboard();
 
 // ---------- zoom bar ----------
 function buildZoombar() {
@@ -1642,6 +1739,19 @@ function buildLaserPop() {
   const r = $('#stayR', pop); r.oninput = () => { L.stay = +r.value; $('#stayV').textContent = r.value + ' s'; savePrefs(); };
 }
 
+// keep pens readable: chalk-white on dark boards, black on light boards
+function adaptPens(color, announce) {
+  let switched = false;
+  for (const k of ['hard', 'ink', 'bamboo', 'chalk', 'tex']) {
+    const pr = App.penPrefs[k];
+    if (isDark(color) && luminance(pr.color) < 0.25) { pr.color = '#F7F3E8'; switched = true; }
+    else if (!isDark(color) && luminance(pr.color) > 0.85) { pr.color = '#111111'; switched = true; }
+  }
+  if (App.textStyle) { if (isDark(color) && luminance(App.textStyle.c) < 0.25) App.textStyle.c = '#F7F3E8'; else if (!isDark(color) && luminance(App.textStyle.c) > 0.85) App.textStyle.c = '#111111'; }
+  if (switched) { savePrefs(); refreshDock(); if (announce) toast(isDark(color) ? 'Pens switched to chalk white' : 'Pens switched to black'); }
+}
+on('pagechange', () => { const p = curPage(); if (p && !App.overlay) adaptPens(p.bg.color, false); });
+
 // ---- 07-storage.js ----
 // ===== Autosave to the browser (IndexedDB) =====
 const Store = (() => {
@@ -1665,7 +1775,15 @@ const Store = (() => {
     const d = await db();
     return new Promise((res, rej) => { const r = d.transaction('kv').objectStore('kv').get(key); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); });
   }
-  return { put, get };
+  async function del(key) {
+    const d = await db();
+    return new Promise((res, rej) => { const t = d.transaction('kv', 'readwrite'); t.objectStore('kv').delete(key); t.oncomplete = res; t.onerror = () => rej(t.error); });
+  }
+  async function keys() {
+    const d = await db();
+    return new Promise((res, rej) => { const r = d.transaction('kv').objectStore('kv').getAllKeys(); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); });
+  }
+  return { put, get, del, keys };
 })();
 
 function serializeDoc() {
@@ -1691,7 +1809,7 @@ function scheduleAutosave() {
     const run = async () => {
       if (saving || live.size || eraserActive()) return scheduleAutosave(); // never save mid-stroke
       saving = true;
-      try { await Store.put('autosave', serializeDoc()); $('#saveState').textContent = 'Saved'; }
+      try { await saveBoardNow(); $('#saveState').textContent = 'Saved'; }
       catch (e) { $('#saveState').textContent = ''; }
       saving = false;
     };
@@ -1709,10 +1827,7 @@ async function restoreAutosave() {
   } catch (e) {}
   return false;
 }
-function newBoard() {
-  App.doc.pages = [newPage()]; App.cur = 0; App.history = []; App.future = []; App.views.clear(); App.file = { name: null, handle: null }; refreshTitle();
-  emit('docchange'); emit('history'); emit('pagechange'); toast('New board ready');
-}
+function newBoard() { createBoard({ name: nextBoardName(), bg: App.settings.newBg }); }
 
 // ---- 08-objects.js ----
 // ===== Lines (t:'l'), shapes (t:'h') and text (t:'x'): geometry, drawing, hit tests, erasing, transforms =====
@@ -1870,7 +1985,9 @@ function measureText(s, fs, b) {
 function drawTextObj(ctx, o) {
   ctx.save(); ctx.translate(o.x + o.w / 2, o.y + o.h / 2); if (o.r) ctx.rotate(o.r); ctx.translate(-o.w / 2, -o.h / 2);
   ctx.font = textFont(o); ctx.fillStyle = o.c; ctx.textBaseline = 'top';
-  String(o.s).split('\n').forEach((l, i) => ctx.fillText(l, 2, i * o.fs * TEXT_LH + o.fs * (TEXT_LH - 1) / 2));
+  ctx.textAlign = o.al === 'center' ? 'center' : o.al === 'right' ? 'right' : 'left';
+  const ax = o.al === 'center' ? o.w / 2 : o.al === 'right' ? o.w - 2 : 2;
+  String(o.s).split('\n').forEach((l, i) => ctx.fillText(l, ax, i * o.fs * TEXT_LH + o.fs * (TEXT_LH - 1) / 2));
   ctx.restore();
 }
 
@@ -3219,42 +3336,21 @@ function loadPdfJs() {
   pdfjsP.catch(() => { pdfjsP = null; });
   return pdfjsP;
 }
-async function insertPdf(file) {
-  toast('Opening PDF…');
-  let pdf;
-  try { const lib = await loadPdfJs(); pdf = await lib.getDocument({ data: new Uint8Array(await file.arrayBuffer()), isEvalSupported: false }).promise; }
-  catch (e) { toast('That PDF could not be opened'); return; }
-  const pages = [], N = pdf.numPages;
-  for (let i = 1; i <= N; i++) {
-    toast(`Loading page ${i} of ${N}…`);
-    const pg = await pdf.getPage(i), vp0 = pg.getViewport({ scale: 1 }), scale = Math.min(3, 2200 / Math.max(vp0.width, vp0.height) * 1.0);
-    const vp = pg.getViewport({ scale }), c = document.createElement('canvas'); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
-    const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
-    await pg.render({ canvasContext: g, viewport: vp }).promise;
-    const a = await addAsset(c.toDataURL('image/jpeg', 0.86));
-    pages.push({ ...newPage({ color: '#FFFFFF', pattern: 'none' }), bgImg: { a, w: c.width, h: c.height } });
-  }
-  const at = curPage().objects.length || curPage().bgImg ? App.cur + 1 : App.cur;
-  commit(() => { const all = App.doc.pages.slice(); all.splice(at, at === App.cur ? 1 : 0, ...pages); setPages(all); App.cur = at; });
-  emit('pagechange'); toast(`${N} PDF page${N > 1 ? 's' : ''} added — write on them like any page`);
-}
+async function insertPdf(file) { return insertPagesFrom([file]); }
 async function insertFromPicker(kind) {
   closePops();
-  if (kind === 'image') { const f = await pickFiles('image/*', true); if (f.length) insertImages(f); }
-  else if (kind === 'pdf') { const f = await pickFiles('application/pdf,.pdf'); if (f[0]) insertPdf(f[0]); }
-  else if (kind === 'ppt') {
-    const ok = await confirmBox('Insert a PowerPoint', 'In PowerPoint, choose File → Export (or Save As) → PDF. Then insert that PDF here: every slide becomes a page you can write on.', 'Choose the PDF');
-    if (ok) { const f = await pickFiles('application/pdf,.pdf'); if (f[0]) insertPdf(f[0]); }
-  }
+  const acc = { image: 'image/*', pdf: 'application/pdf,.pdf', docx: '.docx,.doc', pptx: '.pptx,.ppt', notes: '.txt,.md,text/plain' }[kind];
+  const f = await pickFiles(acc, kind === 'image'); if (!f.length) return;
+  if (kind === 'image') insertImages(f); else insertPagesFrom(f);
 }
 // drag & drop and paste
 document.addEventListener('dragover', e => { e.preventDefault(); });
 document.addEventListener('drop', e => {
   e.preventDefault(); const files = Array.from(e.dataTransfer.files || []); if (!files.length) return;
   const likhi = files.find(f => /\.likhi$|\.json$/i.test(f.name)); if (likhi) return openBoardFile(likhi);
-  const pdf = files.find(f => f.type === 'application/pdf' || /\.pdf$/i.test(f.name)); if (pdf) return insertPdf(pdf);
-  if (files.some(f => /\.pptx?$/i.test(f.name))) return insertFromPicker('ppt');
-  insertImages(files, { x: e.clientX, y: e.clientY });
+  if (dashOpen) return importFilesAsBoard(files);
+  if (files.every(f => /^image\//.test(f.type))) return insertImages(files, { x: e.clientX, y: e.clientY });
+  insertPagesFrom(files);
 });
 document.addEventListener('paste', e => {
   if (e.target.closest && e.target.closest('input,textarea')) return;
@@ -3268,7 +3364,7 @@ function boardData() {
   for (const id of ids) if (App.assets[id]) assets[id] = App.assets[id];
   return { app: 'likhi', version: 1, cur: App.cur, pages, assets };
 }
-const suggestedName = () => (App.file.name || 'My board').replace(/\.likhi$/i, '');
+const suggestedName = () => (App.board.name || 'My board').replace(/[\\/:*?"<>|]/g, '-');
 async function saveBoard(as) {
   closePops();
   const text = JSON.stringify(boardData()), blob = new Blob([text], { type: 'application/json' });
@@ -3277,12 +3373,12 @@ async function saveBoard(as) {
       let h = !as && App.file.handle;
       if (!h) h = await window.showSaveFilePicker({ suggestedName: suggestedName() + '.likhi', types: [{ description: 'Likhi board', accept: { 'application/json': ['.likhi'] } }] });
       const w = await h.createWritable(); await w.write(blob); await w.close();
-      App.file = { name: h.name, handle: h }; refreshTitle(); toast('Saved ' + h.name); return true;
+      App.file = { name: h.name, handle: h }; toast('Saved ' + h.name); return true;
     }
   } catch (e) { if (e && e.name === 'AbortError') return false; }
   const name = await promptBox(as || !App.file.name ? 'Save board' : 'Save board', 'File name', suggestedName(), 'Save');
   if (!name) return false;
-  downloadBlob(blob, name.replace(/\.likhi$/i, '') + '.likhi'); App.file = { name: name.replace(/\.likhi$/i, '') + '.likhi', handle: null }; refreshTitle();
+  downloadBlob(blob, name.replace(/\.likhi$/i, '') + '.likhi'); App.file = { name: name.replace(/\.likhi$/i, '') + '.likhi', handle: null };
   toast('Saved to your Downloads folder'); return true;
 }
 async function openBoard() {
@@ -3298,16 +3394,15 @@ async function openBoard() {
 async function openBoardFile(f, handle, text) {
   try {
     const d = JSON.parse(text != null ? text : await readAsText(f));
-    if (!d || d.app !== 'likhi') throw 0;
-    const busy = App.doc.pages.some(p => p.objects.length || p.bgImg) || App.doc.pages.length > 1;
-    if (busy && !(await confirmBox('Open this board?', 'The board on screen now will be replaced. Save it first if you want to keep it.', 'Open'))) return;
+    if (!d || d.app !== 'likhi' || !Array.isArray(d.pages)) throw 0;
     for (const [id, src] of Object.entries(d.assets || {})) { App.assets[id] = src; imgCache.delete(id); try { await Store.put('asset:' + id, src); } catch (e) {} }
-    d.assets = App.assets; loadDoc(d);
-    App.file = { name: (f && f.name) || 'Board.likhi', handle: handle || null }; refreshTitle(); toast('Opened ' + App.file.name);
+    const name = ((f && f.name) || 'Board').replace(/\.(likhi|json)$/i, '');
+    await createBoard({ name, pages: d.pages.map(p => ({ ...p, id: p.id || uid(), objects: p.objects || [] })), cur: clamp(d.cur || 0, 0, d.pages.length - 1) });
+    App.file = { name: (f && f.name) || null, handle: handle || null }; toast('Opened ' + name);
   } catch (e) { toast('That file is not a Likhi board'); }
 }
 function refreshTitle() {
-  const n = App.file.name ? App.file.name.replace(/\.likhi$/i, '') : '';
+  const n = App.board && App.board.name ? App.board.name : '';
   $('#fileName').textContent = n; document.title = (n ? n + ' — ' : '') + 'Likhi';
 }
 function downloadBlob(blob, name) {
@@ -3418,16 +3513,19 @@ function buildInsertPop() {
   const it = (id, ic, t, sub) => `<button class="menu-item" id="${id}">${icon(ic)}<span class="grow">${t}${sub ? `<br><small style="color:var(--ui-muted)">${sub}</small>` : ''}</span></button>`;
   pop.innerHTML = it('iImg', 'Image', 'Picture', 'PNG, JPG, GIF… or drag it onto the board') +
     it('iPdf', 'FileText', 'PDF', 'Every page becomes a board page') +
-    it('iPpt', 'Monitor', 'PowerPoint', 'Save it as PDF, then insert') +
+    it('iPpt', 'Monitor', 'PowerPoint (.pptx)', 'Every slide becomes a page') +
+    it('iDoc', 'FileText', 'Word document (.docx)', 'Text and pictures flow onto pages') +
+    it('iTxt', 'Type', 'Notes (.txt, .md)', 'Text notes, headings and bullet points') +
     it('iScr', 'Expand', window.likhiDesktop ? 'Draw on the screen' : 'Screenshot to annotate', window.likhiDesktop ? 'Write on top of any app' : 'Capture a window or screen and write on it');
   $('#iImg').onclick = () => insertFromPicker('image'); $('#iPdf').onclick = () => insertFromPicker('pdf');
-  $('#iPpt').onclick = () => insertFromPicker('ppt'); $('#iScr').onclick = annotateScreen;
+  $('#iPpt').onclick = () => insertFromPicker('pptx'); $('#iDoc').onclick = () => insertFromPicker('docx'); $('#iTxt').onclick = () => insertFromPicker('notes');
+  $('#iScr').onclick = annotateScreen;
 }
 document.addEventListener('keydown', e => {
   if (e.target.closest && e.target.closest('input,textarea')) return;
   const mod = e.ctrlKey || e.metaKey, k = e.key.toLowerCase();
-  if (mod && k === 's') { e.preventDefault(); saveBoard(e.shiftKey); }
-  else if (mod && k === 'o') { e.preventDefault(); openBoard(); }
+  if (mod && k === 's') { e.preventDefault(); clearTimeout(saveTimer); saveBoardNow().then(() => toast('Board saved')); }
+  else if (mod && k === 'o') { e.preventDefault(); showDashboard(); }
   else if (mod && k === 'p') { e.preventDefault(); printBoard(); }
 });
 
@@ -3475,6 +3573,805 @@ if (/^https?:$/.test(location.protocol) && !desk && !App.overlay) {
   if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
 
+// ---- 08h-boards.js ----
+// ===== Boards & dashboard: every board is saved in the browser; the dashboard lists them all =====
+App.board = { id: null, name: 'Untitled board' };
+const BOARD_KINDS = [
+  { k: 'white', name: 'Whiteboard', bg: { color: '#FFFFFF', pattern: 'none' } },
+  { k: 'black', name: 'Blackboard', bg: { color: '#2B2F33', pattern: 'none' } },
+  { k: 'green', name: 'Greenboard', bg: { color: '#1F4D3A', pattern: 'none' } },
+  { k: 'pitch', name: 'Pitch black', bg: { color: '#000000', pattern: 'none' } },
+  { k: 'graph', name: 'Graph paper', bg: { color: '#FFFFFF', pattern: 'graph' } },
+  { k: 'four', name: 'Handwriting', bg: { color: '#FFFFFF', pattern: 'fourline' } },
+  { k: 'lines', name: 'Lined notes', bg: { color: '#FBF8EF', pattern: 'lines' } },
+  { k: 'inf', name: 'Infinite canvas', bg: { color: '#FFFFFF', pattern: 'dots' }, infinite: true }
+];
+const boardIndex = async () => { try { return (await Store.get('boards')) || []; } catch (e) { return []; } };
+const putIndex = list => Store.put('boards', list);
+function nextBoardName() { const d = new Date(); return 'Board · ' + d.toLocaleDateString([], { day: 'numeric', month: 'short' }) + ', ' + d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); }
+
+let saveChain = Promise.resolve();
+function saveBoardNow(quick) {
+  if (!App.board.id || App.overlay) return Promise.resolve();
+  const id = App.board.id, name = App.board.name, doc = serializeDoc();
+  let thumb = null;
+  if (!quick) { try { thumb = renderPageCanvas(App.doc.pages[0], 360).toDataURL('image/jpeg', 0.7); } catch (e) {} }
+  saveChain = saveChain.then(async () => {
+    await Store.put('board:' + id, doc);
+    const list = await boardIndex(); let e = list.find(b => b.id === id);
+    if (!e) { e = { id, created: Date.now() }; list.push(e); }
+    Object.assign(e, { name, updated: Date.now(), pages: doc.pages.length }); if (thumb) e.thumb = thumb;
+    await putIndex(list);
+  }).catch(() => {});
+  return saveChain;
+}
+async function loadAssetsFor(pages) {
+  for (const id of usedAssets(pages)) if (!App.assets[id]) { try { const src = await Store.get('asset:' + id); if (src) App.assets[id] = src; } catch (e) {} }
+}
+async function openBoardById(id) {
+  if (App.board.id && App.board.id !== id) { clearTimeout(saveTimer); await saveBoardNow(); }
+  const d = await Store.get('board:' + id); if (!d) { toast('That board could not be found'); return false; }
+  const list = await boardIndex(), e = list.find(b => b.id === id);
+  await loadAssetsFor(d.pages);
+  App.board = { id, name: (e && e.name) || 'Untitled board' }; App.file = { name: null, handle: null };
+  loadDoc(d); LS.set('lastBoard', id); refreshTitle(); hideDashboard();
+  return true;
+}
+// make a brand-new board (optionally with ready-made pages) and open it
+async function createBoard({ name, bg, infinite, pages, cur }) {
+  if (App.board.id) { clearTimeout(saveTimer); await saveBoardNow(); }
+  App.board = { id: 'b' + uid(), name: name || nextBoardName() }; App.file = { name: null, handle: null };
+  App.doc.pages = pages && pages.length ? pages : [{ ...newPage(bg || App.settings.newBg), infinite: !!infinite }];
+  App.cur = cur || 0; App.history = []; App.future = []; App.views.clear(); App.sel = [];
+  emit('docchange'); emit('history'); emit('pagechange');
+  LS.set('lastBoard', App.board.id); refreshTitle(); hideDashboard();
+  await saveBoardNow();
+}
+async function renameBoard(id) {
+  const list = await boardIndex(), e = list.find(b => b.id === id) || { name: App.board.name };
+  const name = await promptBox('Rename board', 'Board name', e.name, 'Rename'); if (!name) return;
+  if (id === App.board.id) { App.board.name = name; refreshTitle(); }
+  const L = await boardIndex(), x = L.find(b => b.id === id); if (x) { x.name = name; await putIndex(L); }
+  if (dashOpen) renderDashboard();
+}
+async function duplicateBoard(id) {
+  if (id === App.board.id) await saveBoardNow();
+  const d = await Store.get('board:' + id), L = await boardIndex(), e = L.find(b => b.id === id); if (!d) return;
+  const nid = 'b' + uid(); await Store.put('board:' + nid, d);
+  L.push({ ...e, id: nid, name: (e ? e.name : 'Board') + ' (copy)', created: Date.now(), updated: Date.now() }); await putIndex(L);
+  toast('Board duplicated'); renderDashboard();
+}
+async function deleteBoard(id) {
+  const L = await boardIndex(), e = L.find(b => b.id === id);
+  if (!(await confirmBox('Delete this board?', `“${e ? e.name : 'This board'}” and all its pages will be deleted for good.`, 'Delete', true))) return;
+  await putIndex(L.filter(b => b.id !== id)); try { await Store.del('board:' + id); } catch (err) {}
+  if (id === App.board.id) { App.board = { id: null, name: '' }; LS.set('lastBoard', null); }
+  toast('Board deleted'); renderDashboard();
+}
+async function downloadBoardFile(id) {
+  if (id !== App.board.id) { const d = await Store.get('board:' + id), L = await boardIndex(), e = L.find(b => b.id === id); if (!d) return;
+    await loadAssetsFor(d.pages); const assets = {}; for (const a of usedAssets(d.pages)) assets[a] = App.assets[a];
+    downloadBlob(new Blob([JSON.stringify({ ...d, assets })], { type: 'application/json' }), (e ? e.name : 'Board').replace(/[\\/:*?"<>|]/g, '-') + '.likhi'); return; }
+  downloadBlob(new Blob([JSON.stringify(boardData())], { type: 'application/json' }), App.board.name.replace(/[\\/:*?"<>|]/g, '-') + '.likhi');
+}
+
+// first start: move an older single autosave into the boards list, then show the dashboard or the last board
+async function bootBoards() {
+  if (App.overlay) return;
+  let list = await boardIndex();
+  if (!list.length) {
+    try {
+      const old = await Store.get('autosave');
+      if (old && old.pages && old.pages.some(p => p.objects.length || p.bgImg)) {
+        const id = 'b' + uid(); await Store.put('board:' + id, old); list = [{ id, name: old.file || 'My first board', created: Date.now(), updated: Date.now(), pages: old.pages.length }]; await putIndex(list);
+      }
+    } catch (e) {}
+  }
+  const last = LS.get('lastBoard', null);
+  if (App.settings.start === 'last' && last && list.some(b => b.id === last)) { if (await openBoardById(last)) return; }
+  if (!list.length && App.settings.start === 'last') { await createBoard({ name: 'My first board' }); return; }
+  showDashboard();
+}
+
+// ---------- dashboard UI ----------
+let dashOpen = false, dashQuery = '', dashSort = LS.get('dashSort', 'recent');
+function showDashboard() {
+  closePops(); if (typeof textEd !== 'undefined' && textEd) commitText();
+  if (App.board.id) { clearTimeout(saveTimer); saveBoardNow(); }
+  dashOpen = true; $('#dash').classList.add('show'); renderDashboard();
+}
+function hideDashboard() { dashOpen = false; $('#dash').classList.remove('show'); }
+const ago = t => { const s = (Date.now() - t) / 1000; if (s < 60) return 'just now'; if (s < 3600) return Math.floor(s / 60) + ' min ago'; if (s < 86400) return Math.floor(s / 3600) + ' h ago'; if (s < 172800) return 'yesterday'; return new Date(t).toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' }); };
+async function renderDashboard() {
+  const el = $('#dash'); let list = await boardIndex();
+  const q = dashQuery.trim().toLowerCase(); if (q) list = list.filter(b => (b.name || '').toLowerCase().includes(q));
+  list.sort(dashSort === 'name' ? (a, b) => (a.name || '').localeCompare(b.name || '') : dashSort === 'created' ? (a, b) => b.created - a.created : (a, b) => b.updated - a.updated);
+  const mine = myTemplates();
+  const kindTile = k => `<button class="nb" data-kind="${k.k}"><span class="nbprev" style="background:${k.bg.color}">${patternSVG(k.bg, k.infinite)}</span><b>${k.name}</b></button>`;
+  el.innerHTML = `<header class="dhead"><div class="dlogo"><svg width="40" height="40" viewBox="0 0 44 44"><rect x="2" y="2" width="40" height="40" rx="10" fill="#F7F3E8"/><path d="M11 30 C15 18, 19 14, 21 24 S 28 30, 33 14" stroke="#1F4D3A" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="33" cy="14" r="3" fill="#F2C94C"/></svg><div><b>likhi</b><small>${APP_CREDITS.tagline}</small></div></div>
+    <div class="grow"></div>
+    ${App.board.id ? `<button class="dbtn" id="dBack">${icon('ArrowLeft', 18)} Back to board</button>` : ''}
+    <button class="dbtn" id="dImport">${icon('FolderOpen', 18)} Import</button>
+    <button class="dbtn" id="dSettings" title="Settings">${icon('Settings', 18)}</button></header>
+    <main class="dmain">
+    <h2>Start a new board</h2>
+    <div class="nbrow">${BOARD_KINDS.map(kindTile).join('')}
+      ${mine.length ? `<button class="nb" data-tpl="1"><span class="nbprev" style="background:var(--ui-bg-2)">${icon('LayoutTemplate', 34, 1.6)}</span><b>From my template</b></button>` : ''}</div>
+    <div class="drow"><h2>My boards <small>${list.length}</small></h2><div class="grow"></div>
+      <input class="tinput dsearch" id="dSearch" placeholder="Search boards" value="${dashQuery.replace(/"/g, '&quot;')}">
+      <select class="tinput dsort" id="dSort"><option value="recent">Last edited</option><option value="created">Newest</option><option value="name">Name A–Z</option></select></div>
+    ${list.length ? '<div class="bgrid">' + list.map(b => `<div class="bcard ${b.id === App.board.id ? 'cur' : ''}" data-id="${b.id}">
+        <div class="bthumb">${b.thumb ? `<img src="${b.thumb}" alt="">` : icon('Pen', 34, 1.4)}</div>
+        <div class="binfo"><b title="${(b.name || '').replace(/"/g, '&quot;')}">${(b.name || 'Untitled').replace(/</g, '&lt;')}</b><small>${b.pages || 1} page${(b.pages || 1) > 1 ? 's' : ''} · ${ago(b.updated)}</small></div>
+        <button class="btn sm bmore" title="More">${icon('Ellipsis', 18)}</button></div>`).join('') + '</div>'
+      : `<div class="dempty">${icon('Pen', 40, 1.4)}<p>${q ? 'No boards match your search.' : 'Your boards will appear here. Pick a board type above to start.'}</p></div>`}
+    </main><footer class="dfoot">Likhi v${APP_VERSION} · <a href="#" id="dAbout">About &amp; credits</a></footer>`;
+  $('#dSort', el).value = dashSort;
+  $$('[data-kind]', el).forEach(b => b.onclick = () => { const k = BOARD_KINDS.find(x => x.k === b.dataset.kind); createBoard({ name: k.name + ' · ' + new Date().toLocaleDateString([], { day: 'numeric', month: 'short' }), bg: k.bg, infinite: k.infinite }); });
+  const tb = $('[data-tpl]', el); if (tb) tb.onclick = () => showPop($('#popDashTpl'), tb, buildDashTplPop);
+  $$('.bcard', el).forEach(c => c.onclick = e => {
+    if (e.target.closest('.bmore')) { showPop($('#popBoard'), e.target.closest('.bmore'), () => buildBoardPop(c.dataset.id)); return; }
+    openBoardById(c.dataset.id);
+  });
+  const back = $('#dBack', el); if (back) back.onclick = hideDashboard;
+  $('#dImport', el).onclick = importToNewBoard;
+  $('#dSettings', el).onclick = () => openSettings();
+  $('#dAbout', el).onclick = e => { e.preventDefault(); openSettings('about'); };
+  const sIn = $('#dSearch', el); sIn.oninput = () => { dashQuery = sIn.value; clearTimeout(sIn._t); sIn._t = setTimeout(() => { renderDashboard().then(() => { const n = $('#dSearch'); n.focus(); n.setSelectionRange(n.value.length, n.value.length); }); }, 200); };
+  sIn.onkeydown = e => e.stopPropagation();
+  $('#dSort', el).onchange = e => { dashSort = e.target.value; LS.set('dashSort', dashSort); renderDashboard(); };
+}
+function patternSVG(bg, inf) {
+  const c = isDark(bg.color) ? 'rgba(247,243,232,.35)' : 'rgba(40,70,90,.28)';
+  if (inf) return `<svg viewBox="0 0 80 50">${[...Array(28)].map((_, i) => `<circle cx="${6 + (i % 7) * 11.5}" cy="${7 + Math.floor(i / 7) * 12}" r="1.3" fill="${c}"/>`).join('')}<text x="40" y="31" font-size="18" text-anchor="middle" fill="${c}">∞</text></svg>`;
+  if (bg.pattern === 'graph') return `<svg viewBox="0 0 80 50">${[...Array(9)].map((_, i) => `<line x1="${i * 10}" y1="0" x2="${i * 10}" y2="50" stroke="${c}" stroke-width=".5"/>`).join('')}${[...Array(6)].map((_, i) => `<line x1="0" y1="${i * 10}" x2="80" y2="${i * 10}" stroke="${c}" stroke-width=".5"/>`).join('')}<line x1="40" y1="0" x2="40" y2="50" stroke="#223" stroke-width="1"/><line x1="0" y1="25" x2="80" y2="25" stroke="#223" stroke-width="1"/></svg>`;
+  if (bg.pattern === 'fourline') return `<svg viewBox="0 0 80 50">${[10, 30].map(y => `<line x1="0" y1="${y}" x2="80" y2="${y}" stroke="${c}"/><line x1="0" y1="${y + 4}" x2="80" y2="${y + 4}" stroke="${c}" stroke-dasharray="2 2"/><line x1="0" y1="${y + 8}" x2="80" y2="${y + 8}" stroke="rgba(220,60,60,.5)"/><line x1="0" y1="${y + 12}" x2="80" y2="${y + 12}" stroke="${c}"/>`).join('')}</svg>`;
+  if (bg.pattern === 'lines') return `<svg viewBox="0 0 80 50">${[8, 16, 24, 32, 40].map(y => `<line x1="0" y1="${y}" x2="80" y2="${y}" stroke="${c}"/>`).join('')}</svg>`;
+  return '';
+}
+function buildBoardPop(id) {
+  const pop = $('#popBoard');
+  const it = (a, ic, t, danger) => `<button class="menu-item" data-a="${a}" ${danger ? 'style="color:var(--danger)"' : ''}>${icon(ic, 20)}<span class="grow">${t}</span></button>`;
+  pop.innerHTML = it('open', 'FolderOpen', 'Open') + it('rename', 'Type', 'Rename') + it('dup', 'CopyPlus', 'Duplicate') + it('dl', 'Download', 'Save to computer (.likhi)') + it('del', 'Trash2', 'Delete', true);
+  $$('[data-a]', pop).forEach(b => b.onclick = () => {
+    closePops(); const a = b.dataset.a;
+    if (a === 'open') openBoardById(id); else if (a === 'rename') renameBoard(id); else if (a === 'dup') duplicateBoard(id);
+    else if (a === 'dl') downloadBoardFile(id); else if (a === 'del') deleteBoard(id);
+  });
+}
+function buildDashTplPop() {
+  const pop = $('#popDashTpl');
+  pop.innerHTML = '<h4>My templates</h4><div class="tgrid">' + myTemplates().map(t => `<div class="tcard" data-id="${t.id}"><canvas></canvas><div class="tname">${t.name.replace(/</g, '&lt;')}</div></div>`).join('') + '</div>';
+  $$('.tcard', pop).forEach(el => {
+    const t = myTemplates().find(x => x.id === el.dataset.id);
+    for (const [id, src] of Object.entries(t.assets || {})) if (!App.assets[id]) App.assets[id] = src;
+    const th = pageThumb({ bg: t.bg, bgImg: t.bgImg, objects: t.objects, infinite: !!t.infinite }), cv = el.querySelector('canvas'); cv.width = th.width; cv.height = th.height; cv.getContext('2d').drawImage(th, 0, 0);
+    el.onclick = () => {
+      closePops(); for (const [id, src] of Object.entries(t.assets || {})) Store.put('asset:' + id, src).catch(() => {});
+      const pg = { ...newPage(t.bg), infinite: !!t.infinite, objects: JSON.parse(JSON.stringify(t.objects)).map(o => ({ ...o, id: uid() })) }; if (t.bgImg) pg.bgImg = { ...t.bgImg };
+      createBoard({ name: t.name + ' · ' + new Date().toLocaleDateString([], { day: 'numeric', month: 'short' }), pages: [pg] });
+    };
+  });
+}
+// import any supported file as a new board
+async function importToNewBoard() {
+  closePops();
+  const files = await pickFiles('.likhi,.json,.pdf,.docx,.pptx,.txt,.md,.doc,.ppt,image/*', true); if (!files.length) return;
+  await importFilesAsBoard(files);
+}
+async function importFilesAsBoard(files) {
+  const f = files[0], base = f.name.replace(/\.[^.]+$/, '');
+  try {
+    if (/\.(likhi|json)$/i.test(f.name)) return openBoardFile(f);
+    const pages = await filesToPages(files);
+    if (!pages || !pages.length) return;
+    await createBoard({ name: base, pages });
+    toast(`Imported “${f.name}” — ${pages.length} page${pages.length > 1 ? 's' : ''}`);
+  } catch (e) { toast(e && e.message ? e.message : 'That file could not be imported'); }
+}
+
+// ---- 08i-office.js ----
+// ===== Import & export: notes (.txt/.md), PDF, Word (.docx), PowerPoint (.pptx), pictures =====
+// ---------- tiny ZIP reader (uses the browser's built-in deflate) ----------
+async function unzip(buf) {
+  const u = new Uint8Array(buf), dv = new DataView(u.buffer, u.byteOffset, u.byteLength), files = {};
+  let e = u.length - 22; while (e >= 0 && dv.getUint32(e, true) !== 0x06054b50) e--;
+  if (e < 0) throw new Error('This file is damaged or not a real Office file');
+  let n = dv.getUint16(e + 10, true), p = dv.getUint32(e + 16, true);
+  const dec = new TextDecoder();
+  for (let i = 0; i < n; i++) {
+    if (dv.getUint32(p, true) !== 0x02014b50) break;
+    const method = dv.getUint16(p + 10, true), csize = dv.getUint32(p + 20, true), nl = dv.getUint16(p + 28, true), xl = dv.getUint16(p + 30, true), cl = dv.getUint16(p + 32, true), off = dv.getUint32(p + 42, true);
+    const name = dec.decode(u.subarray(p + 46, p + 46 + nl));
+    files[name] = { method, csize, off };
+    p += 46 + nl + xl + cl;
+  }
+  const read = async name => {
+    const f = files[name]; if (!f) return null;
+    const ln = dv.getUint16(f.off + 26, true), lx = dv.getUint16(f.off + 28, true), start = f.off + 30 + ln + lx, data = u.subarray(start, start + f.csize);
+    if (f.method === 0) return data;
+    return new Uint8Array(await new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer());
+  };
+  return { names: Object.keys(files), read, text: async n => { const d = await read(n); return d ? dec.decode(d) : null; } };
+}
+// ---------- tiny ZIP writer (stored, no compression needed for Office files) ----------
+const CRC_T = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u) { let c = 0xFFFFFFFF; for (let i = 0; i < u.length; i++) c = CRC_T[(c ^ u[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function zip(entries, mime) {
+  const enc = new TextEncoder(), parts = [], central = []; let off = 0;
+  const d = new Date(), time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
+  for (const [name, content] of entries) {
+    const data = typeof content === 'string' ? enc.encode(content) : content, nm = enc.encode(name), crc = crc32(data);
+    const h = new DataView(new ArrayBuffer(30));
+    h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true); h.setUint16(8, 0, true); h.setUint16(10, time, true); h.setUint16(12, date, true);
+    h.setUint32(14, crc, true); h.setUint32(18, data.length, true); h.setUint32(22, data.length, true); h.setUint16(26, nm.length, true); h.setUint16(28, 0, true);
+    parts.push(new Uint8Array(h.buffer), nm, data);
+    const c = new DataView(new ArrayBuffer(46));
+    c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0x0800, true); c.setUint16(10, 0, true); c.setUint16(12, time, true); c.setUint16(14, date, true);
+    c.setUint32(16, crc, true); c.setUint32(20, data.length, true); c.setUint32(24, data.length, true); c.setUint16(28, nm.length, true); c.setUint32(42, off, true);
+    central.push(new Uint8Array(c.buffer), nm);
+    off += 30 + nm.length + data.length;
+  }
+  const csize = central.reduce((s, a) => s + a.length, 0), e = new DataView(new ArrayBuffer(22));
+  e.setUint32(0, 0x06054b50, true); e.setUint16(8, entries.length, true); e.setUint16(10, entries.length, true); e.setUint32(12, csize, true); e.setUint32(16, off, true);
+  return new Blob([...parts, ...central, new Uint8Array(e.buffer)], { type: mime });
+}
+const xmlDoc = s => new DOMParser().parseFromString(s, 'application/xml');
+const kids = (el, local) => el ? Array.from(el.children).filter(c => c.localName === local) : [];
+const kid = (el, local) => kids(el, local)[0] || null;
+const desc = (el, local) => el ? Array.from(el.getElementsByTagName('*')).filter(c => c.localName === local) : [];
+const MIME = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', gif: 'image/gif', bmp: 'image/bmp', svg: 'image/svg+xml', webp: 'image/webp' };
+function bytesToDataURL(u, ext) { let s = ''; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return `data:${MIME[ext] || 'image/png'};base64,` + btoa(s); }
+function resolvePath(base, target) { if (target.startsWith('/')) return target.slice(1); const parts = base.split('/'); parts.pop(); for (const t of target.split('/')) { if (t === '..') parts.pop(); else if (t !== '.') parts.push(t); } return parts.join('/'); }
+async function readRels(z, partPath) {
+  const dir = partPath.split('/'); const file = dir.pop(); const relsPath = [...dir, '_rels', file + '.rels'].join('/');
+  const t = await z.text(relsPath), out = {}; if (!t) return out;
+  for (const r of desc(xmlDoc(t), 'Relationship')) out[r.getAttribute('Id')] = resolvePath(partPath, r.getAttribute('Target'));
+  return out;
+}
+
+// ---------- text layout helpers ----------
+function wrapLines(text, fs, b, maxW) {
+  measureCtx = measureCtx || document.createElement('canvas').getContext('2d'); measureCtx.font = textFont({ fs, b });
+  const out = [];
+  for (const para of String(text).split('\n')) {
+    const words = para.split(/(\s+)/); let line = '';
+    for (const w of words) {
+      const test = line + w;
+      if (measureCtx.measureText(test).width > maxW && line.trim()) { out.push(line.trimEnd()); line = w.trimStart(); }
+      else line = test;
+      while (measureCtx.measureText(line).width > maxW && line.length > 1) { // very long word
+        let k = line.length; while (k > 1 && measureCtx.measureText(line.slice(0, k)).width > maxW) k--;
+        out.push(line.slice(0, k)); line = line.slice(k);
+      }
+    }
+    out.push(line);
+  }
+  return out;
+}
+const INK = '#1E2B25';
+// flow blocks of text and pictures down the pages like a document
+async function flowToPages(blocks, bg) {
+  const M = { x: 110, top: 90, bottom: 80 }, W = PAGE_W - M.x * 2, pages = []; let page = null, y = 0;
+  const newPg = () => { page = { ...newPage(bg || { color: '#FFFFFF', pattern: 'none' }) }; pages.push(page); y = M.top; };
+  newPg();
+  for (const bl of blocks) {
+    if (bl.type === 'break') { if (page.objects.length) newPg(); continue; }
+    if (bl.type === 'gap') { y += bl.h || 20; continue; }
+    if (bl.type === 'img') {
+      let { w, h } = bl; const s = Math.min(1, W / w, (PAGE_H - M.top - M.bottom) / h * 0.9, 900 / h); w *= s; h *= s;
+      if (y + h > PAGE_H - M.bottom && page.objects.length) newPg();
+      const a = await addAsset(bl.src);
+      page.objects.push({ t: 'img', box: true, id: uid(), a, x: r1(M.x + (W - w) / 2), y: r1(y), w: r1(w), h: r1(h), r: 0 }); y += h + 24; continue;
+    }
+    const fs = bl.fs || 30, lh = fs * TEXT_LH, lines = wrapLines(bl.s, fs, bl.b, W - (bl.indent || 0));
+    let i = 0;
+    while (i < lines.length) {
+      let room = Math.floor((PAGE_H - M.bottom - y) / lh);
+      if (room < 1) { newPg(); room = Math.floor((PAGE_H - M.bottom - y) / lh); }
+      const chunk = lines.slice(i, i + room).join('\n'); i += room;
+      const m = measureText(chunk, fs, bl.b), al = bl.al || 'left';
+      const o = { t: 'x', id: uid(), x: M.x + (bl.indent || 0), y: r1(y), w: al === 'left' ? m.w : W, h: m.h, r: 0, s: chunk, fs, c: bl.c || INK, b: !!bl.b };
+      if (al !== 'left') o.al = al;
+      page.objects.push(o); y += m.h + (bl.after != null ? bl.after : fs * 0.45);
+    }
+  }
+  return pages.filter((p, i) => p.objects.length || i === 0);
+}
+
+// ---------- notes (.txt / .md) ----------
+async function textToPages(text) {
+  const blocks = [];
+  for (const raw of text.replace(/\r/g, '').split('\n')) {
+    const l = raw.replace(/\*\*(.+?)\*\*/g, '$1').replace(/__(.+?)__/g, '$1').replace(/`/g, '');
+    if (!l.trim()) { blocks.push({ type: 'gap', h: 14 }); continue; }
+    let m;
+    if ((m = l.match(/^(#{1,6})\s+(.*)/))) blocks.push({ type: 'text', s: m[2], fs: [64, 50, 42, 38, 34, 32][m[1].length - 1], b: true, after: 18 });
+    else if ((m = l.match(/^\s*[-*+]\s+(.*)/))) blocks.push({ type: 'text', s: '•  ' + m[1], fs: 32, indent: 30, after: 8 });
+    else if ((m = l.match(/^\s*(\d+)[.)]\s+(.*)/))) blocks.push({ type: 'text', s: m[1] + '.  ' + m[2], fs: 32, indent: 30, after: 8 });
+    else if (/^-{3,}$/.test(l.trim())) blocks.push({ type: 'break' });
+    else blocks.push({ type: 'text', s: l, fs: 32, after: 10 });
+  }
+  return flowToPages(blocks, { color: '#FBF8EF', pattern: 'lines' });
+}
+
+// ---------- Word (.docx) ----------
+async function docxToPages(buf) {
+  const z = await unzip(buf), docXml = await z.text('word/document.xml');
+  if (!docXml) throw new Error('This doesn’t look like a Word document');
+  const rels = await readRels(z, 'word/document.xml'), body = kid(xmlDoc(docXml).documentElement, 'body'), blocks = [];
+  const paraBlocks = async (p) => {
+    const ppr = kid(p, 'pPr'), st = ppr && kid(ppr, 'pStyle') ? kid(ppr, 'pStyle').getAttribute('w:val') || '' : '', jc = ppr && kid(ppr, 'jc') ? kid(ppr, 'jc').getAttribute('w:val') : '';
+    const list = (ppr && kid(ppr, 'numPr')) || /List(Bullet|Number|Paragraph)/i.test(st);
+    let text = '', bold = 0, runs = 0, color = null, size = 0;
+    for (const n of Array.from(p.getElementsByTagName('*'))) {
+      if (n.localName === 't') text += n.textContent;
+      else if (n.localName === 'tab') text += '    ';
+      else if (n.localName === 'br') { if (n.getAttribute('w:type') === 'page') { if (text.trim()) blocks.push(mkText()); text = ''; blocks.push({ type: 'break' }); } else text += '\n'; }
+      else if (n.localName === 'r') { runs++; const rp = kid(n, 'rPr'); if (rp) { if (kid(rp, 'b') && kid(rp, 'b').getAttribute('w:val') !== '0') bold++; const c = kid(rp, 'color'); if (c && /^[0-9a-f]{6}$/i.test(c.getAttribute('w:val') || '')) color = '#' + c.getAttribute('w:val'); const sz = kid(rp, 'sz'); if (sz) size = Math.max(size, +sz.getAttribute('w:val') / 2); } }
+      else if (n.localName === 'blip') {
+        const id = n.getAttribute('r:embed'), path = rels[id];
+        if (path) { const d = await z.read(path), ext = path.split('.').pop().toLowerCase(); if (d && MIME[ext]) { try { const src = bytesToDataURL(d, ext), im = await loadImageEl(src); blocks.push({ type: 'img', src, w: im.naturalWidth, h: im.naturalHeight }); } catch (e) {} } }
+      }
+    }
+    function mkText() {
+      const H = /^(Title)$/i.test(st) ? 64 : /Heading1|^1$/i.test(st) ? 52 : /Heading2|^2$/i.test(st) ? 44 : /Heading3|^3$/i.test(st) ? 38 : /Subtitle/i.test(st) ? 40 : 0;
+      const fs = H || (size >= 20 ? 44 : size >= 16 ? 36 : 30);
+      return { type: 'text', s: (list ? '•  ' : '') + text, fs, b: !!H || (runs && bold >= runs / 2), c: color && luminance(color) < 0.8 ? color : null, al: jc === 'center' ? 'center' : jc === 'right' || jc === 'end' ? 'right' : 'left', indent: list ? 30 : 0, after: H ? 20 : 12 };
+    }
+    if (text.trim()) blocks.push(mkText()); else if (!desc(p, 'blip').length) blocks.push({ type: 'gap', h: 12 });
+  };
+  for (const el of body ? Array.from(body.children) : []) {
+    if (el.localName === 'p') await paraBlocks(el);
+    else if (el.localName === 'tbl') {
+      for (const tr of kids(el, 'tr')) { const cells = kids(tr, 'tc').map(tc => desc(tc, 't').map(t => t.textContent).join('')); blocks.push({ type: 'text', s: cells.join('   |   '), fs: 28, after: 6 }); }
+      blocks.push({ type: 'gap', h: 14 });
+    }
+  }
+  return flowToPages(blocks);
+}
+
+// ---------- PowerPoint (.pptx) ----------
+async function pptxToPages(buf) {
+  const z = await unzip(buf), presXml = await z.text('ppt/presentation.xml');
+  if (!presXml) throw new Error('This doesn’t look like a PowerPoint file');
+  const pres = xmlDoc(presXml), sz = desc(pres, 'sldSz')[0], cx = +(sz ? sz.getAttribute('cx') : 12192000), cy = +(sz ? sz.getAttribute('cy') : 6858000);
+  const s = Math.min(PAGE_W / cx, PAGE_H / cy), ox = (PAGE_W - cx * s) / 2, oy = (PAGE_H - cy * s) / 2;
+  const prels = await readRels(z, 'ppt/presentation.xml');
+  const order = desc(pres, 'sldId').map(n => prels[n.getAttribute('r:id')]).filter(Boolean);
+  const theme = {}; // scheme colours
+  const themePath = z.names.find(n => /^ppt\/theme\/theme\d+\.xml$/.test(n));
+  if (themePath) { const th = xmlDoc(await z.text(themePath)); const cs = desc(th, 'clrScheme')[0]; if (cs) for (const c of Array.from(cs.children)) { const v = kid(c, 'srgbClr'), sy = kid(c, 'sysClr'); theme[c.localName] = '#' + (v ? v.getAttribute('val') : sy ? (sy.getAttribute('lastClr') || '000000') : '000000'); } }
+  const schemeMap = { tx1: 'dk1', tx2: 'dk2', bg1: 'lt1', bg2: 'lt2' };
+  const colorOf = el => {
+    if (!el) return null; const sf = el.localName === 'solidFill' ? el : kid(el, 'solidFill'); if (!sf) return null;
+    const r = kid(sf, 'srgbClr'); if (r) return '#' + r.getAttribute('val');
+    const sc = kid(sf, 'schemeClr'); if (sc) { const v = sc.getAttribute('val'); return theme[schemeMap[v] || v] || (/^(bg|lt)/.test(v) ? '#FFFFFF' : '#1E2B25'); }
+    return null;
+  };
+  const xfrmOf = sp => { const pr = kid(sp, 'spPr') || kid(sp, 'grpSpPr'); const x = pr && kid(pr, 'xfrm'); if (!x) return null; const o = kid(x, 'off'), e = kid(x, 'ext'); if (!o || !e) return null;
+    return { x: +o.getAttribute('x'), y: +o.getAttribute('y'), w: +e.getAttribute('cx'), h: +e.getAttribute('cy'), rot: +(x.getAttribute('rot') || 0) / 60000 * Math.PI / 180 }; };
+  const phOf = sp => { const nv = Array.from(sp.children).find(c => /^nv/.test(c.localName)); const nvPr = nv && kid(nv, 'nvPr'); const ph = nvPr && kid(nvPr, 'ph'); return ph ? { type: ph.getAttribute('type') || 'body', idx: ph.getAttribute('idx') || '' } : null; };
+  const pages = [];
+  for (const slidePath of order) {
+    const sx = await z.text(slidePath); if (!sx) continue;
+    const doc = xmlDoc(sx), rels = await readRels(z, slidePath), page = newPage({ color: '#FFFFFF', pattern: 'none' }); page.objects = [];
+    // layout + master placeholders, for positions the slide doesn't set itself
+    const layoutPath = Object.values(rels).find(p => /slideLayouts\//.test(p)); let layoutPh = [];
+    const collectPh = async path => { if (!path) return []; const d = xmlDoc(await z.text(path) || '<x/>'); return desc(d, 'sp').map(sp => ({ ph: phOf(sp), x: xfrmOf(sp), sp })).filter(o => o.ph && o.x); };
+    if (layoutPath) { layoutPh = await collectPh(layoutPath); const lrels = await readRels(z, layoutPath); const mp = Object.values(lrels).find(p => /slideMasters\//.test(p)); layoutPh = layoutPh.concat(await collectPh(mp)); }
+    const findPh = ph => layoutPh.find(o => o.ph.type === ph.type && (o.ph.idx === ph.idx || !ph.idx)) || layoutPh.find(o => o.ph.type === ph.type || (ph.type === 'ctrTitle' && o.ph.type === 'title') || (ph.type === 'subTitle' && o.ph.type === 'body'));
+    // background
+    const bg = desc(doc, 'bg')[0];
+    if (bg) { const c = colorOf(kid(bg, 'bgPr')); if (c) page.bg = { color: c, pattern: 'none' }; const blip = desc(bg, 'blip')[0];
+      if (blip && rels[blip.getAttribute('r:embed')]) { const p = rels[blip.getAttribute('r:embed')], d = await z.read(p), ext = p.split('.').pop().toLowerCase(); if (d && MIME[ext]) { const src = bytesToDataURL(d, ext); const im = await loadImageEl(src).catch(() => null); if (im) page.bgImg = { a: await addAsset(src), w: im.naturalWidth, h: im.naturalHeight }; } } }
+    const map = (X, T) => ({ x: ox + T(X).x * s, y: oy + T(X).y * s, w: T(X).w * s, h: T(X).h * s, r: X.rot || 0 });
+    const walk = async (parent, T) => {
+      for (const el of Array.from(parent.children)) {
+        if (el.localName === 'grpSp') {
+          const gp = kid(el, 'grpSpPr'), x = gp && kid(gp, 'xfrm'); let T2 = T;
+          if (x && kid(x, 'chOff')) { const o = kid(x, 'off'), e = kid(x, 'ext'), co = kid(x, 'chOff'), ce = kid(x, 'chExt');
+            const ax = +o.getAttribute('x'), ay = +o.getAttribute('y'), sx2 = +e.getAttribute('cx') / (+ce.getAttribute('cx') || 1), sy2 = +e.getAttribute('cy') / (+ce.getAttribute('cy') || 1), cx0 = +co.getAttribute('x'), cy0 = +co.getAttribute('y');
+            T2 = r => T({ x: ax + (r.x - cx0) * sx2, y: ay + (r.y - cy0) * sy2, w: r.w * sx2, h: r.h * sy2, rot: r.rot }); }
+          await walk(el, T2); continue;
+        }
+        if (el.localName === 'pic') {
+          const X = xfrmOf(el), blip = desc(el, 'blip')[0]; if (!X || !blip) continue;
+          const p = rels[blip.getAttribute('r:embed')]; if (!p) continue; const ext = p.split('.').pop().toLowerCase(); if (!MIME[ext]) continue;
+          const d = await z.read(p); if (!d) continue; const R = map(X, T);
+          page.objects.push({ t: 'img', box: true, id: uid(), a: await addAsset(bytesToDataURL(d, ext)), x: r1(R.x), y: r1(R.y), w: r1(R.w), h: r1(R.h), r: R.r });
+          continue;
+        }
+        if (el.localName === 'graphicFrame') {
+          const X = xfrmOf(el) || (() => { const x = kid(el, 'xfrm'); if (!x) return null; const o = kid(x, 'off'), e = kid(x, 'ext'); return { x: +o.getAttribute('x'), y: +o.getAttribute('y'), w: +e.getAttribute('cx'), h: +e.getAttribute('cy') }; })();
+          const tbl = desc(el, 'tbl')[0]; if (!X || !tbl) continue; const R = map(X, T);
+          const rows = kids(tbl, 'tr').map(tr => kids(tr, 'tc').map(tc => desc(tc, 't').map(t => t.textContent).join('')).join('   |   '));
+          const fs = clamp(R.h / Math.max(1, rows.length) * 0.45, 14, 36), m = measureText(rows.join('\n'), fs, false);
+          page.objects.push({ t: 'x', id: uid(), x: r1(R.x), y: r1(R.y), w: m.w, h: m.h, r: 0, s: rows.join('\n'), fs, c: INK, b: false });
+          continue;
+        }
+        if (el.localName !== 'sp') continue;
+        const ph = phOf(el); let X = xfrmOf(el);
+        if (!X && ph) { const L = findPh(ph); if (L) X = L.x; }
+        if (!X) continue;
+        const R = map(X, T), spPr = kid(el, 'spPr'), geom = spPr && kid(spPr, 'prstGeom'), prst = geom ? geom.getAttribute('prst') : null;
+        const fill = colorOf(spPr), ln = spPr && kid(spPr, 'ln'), lnCol = ln ? colorOf(ln) : null, lnW = ln && ln.getAttribute('w') ? Math.max(1, +ln.getAttribute('w') * s) : 2;
+        const KIND = { rect: 'rect', roundRect: 'rrect', ellipse: 'ellipse', triangle: 'triangle', rtTriangle: 'rtri', diamond: 'diamond', parallelogram: 'para', trapezoid: 'trap', pentagon: 'pentagon', hexagon: 'hexagon', star5: 'star' };
+        if (prst && KIND[prst] && (fill || lnCol)) page.objects.push({ t: 'h', id: uid(), k: KIND[prst], x: r1(R.x), y: r1(R.y), w: r1(R.w), h: r1(R.h), r: R.r, c: lnCol || fill, sw: lnCol ? lnW : 0, f: fill });
+        else if (prst === 'line' || prst === 'straightConnector1') { if (lnCol) page.objects.push({ t: 'l', id: uid(), g: 'straight', p: [R.x, R.y, R.x + R.w, R.y + R.h].map(r1), c: lnCol, w: lnW, d: 'solid' }); }
+        // text
+        const tx = kid(el, 'txBody'); if (!tx) continue;
+        const paras = kids(tx, 'p'); const bp = kid(tx, 'bodyPr'), fit = bp && kid(bp, 'normAutofit'), scale = fit && fit.getAttribute('fontScale') ? +fit.getAttribute('fontScale') / 100000 : 1;
+        const defPt = ph ? ({ title: 40, ctrTitle: 50, subTitle: 26, body: 24 }[ph.type] || 18) : 18;
+        let lines = [], fsPt = 0, bold = false, color = null, algn = null;
+        for (const p of paras) {
+          const ppr = kid(p, 'pPr'); let t = '';
+          for (const r of Array.from(p.children)) { if (r.localName === 'r' || r.localName === 'fld') { const tt = kid(r, 't'); if (tt) t += tt.textContent; const rp = kid(r, 'rPr'); if (rp) { if (rp.getAttribute('sz')) fsPt = Math.max(fsPt, +rp.getAttribute('sz') / 100); if (rp.getAttribute('b') === '1') bold = true; color = color || colorOf(rp); } } else if (r.localName === 'br') t += '\n'; }
+          const bullet = ph && ph.type === 'body' && !(ppr && kid(ppr, 'buNone')) || (ppr && (kid(ppr, 'buChar') || kid(ppr, 'buAutoNum')));
+          if (ppr && ppr.getAttribute('algn')) algn = algn || ppr.getAttribute('algn');
+          if (t.trim()) lines.push((bullet ? '• ' : '') + t); else if (lines.length) lines.push('');
+        }
+        while (lines.length && !lines[lines.length - 1]) lines.pop();
+        if (!lines.length) continue;
+        if (ph && (ph.type === 'title' || ph.type === 'ctrTitle')) bold = true;
+        let fs = (fsPt || defPt) * scale * 12700 * s;
+        if (!color) color = fill && isDark(fill) ? '#FFFFFF' : isDark(page.bg.color) ? '#F7F3E8' : INK;
+        const inset = 0.1 * 914400 * s, maxW = Math.max(40, R.w - inset * 2);
+        let wrapped = wrapLines(lines.join('\n'), fs, bold, maxW), m = measureText(wrapped.join('\n'), fs, bold);
+        while (m.h > R.h * 1.15 && fs > 12) { fs *= 0.92; wrapped = wrapLines(lines.join('\n'), fs, bold, maxW); m = measureText(wrapped.join('\n'), fs, bold); }
+        if (!algn && (prst && fill || (ph && (ph.type === 'ctrTitle' || ph.type === 'subTitle')))) algn = 'ctr';
+        const al = algn === 'ctr' ? 'center' : algn === 'r' ? 'right' : 'left', anchor = bp ? bp.getAttribute('anchor') : null;
+        const ty = anchor === 'ctr' || (prst && fill) ? R.y + (R.h - m.h) / 2 : anchor === 'b' ? R.y + R.h - m.h - inset : R.y + inset * 0.5;
+        const o = { t: 'x', id: uid(), x: r1(R.x + inset), y: r1(ty), w: r1(al === 'left' ? m.w : maxW), h: m.h, r: R.r, s: wrapped.join('\n'), fs: r1(fs), c: color, b: bold };
+        if (al !== 'left') o.al = al;
+        page.objects.push(o);
+      }
+    };
+    const tree = desc(doc, 'spTree')[0]; if (tree) await walk(tree, r => r);
+    pages.push(page);
+  }
+  if (!pages.length) throw new Error('No slides were found in that file');
+  return pages;
+}
+
+// ---------- PDF and pictures ----------
+async function pdfToPages(file) {
+  toast('Opening PDF…');
+  const lib = await loadPdfJs(); const pdf = await lib.getDocument({ data: new Uint8Array(await file.arrayBuffer()), isEvalSupported: false }).promise;
+  const pages = [], N = pdf.numPages;
+  for (let i = 1; i <= N; i++) {
+    toast(`Loading page ${i} of ${N}…`);
+    const pg = await pdf.getPage(i), vp0 = pg.getViewport({ scale: 1 }), scale = Math.min(3, 2200 / Math.max(vp0.width, vp0.height));
+    const vp = pg.getViewport({ scale }), c = document.createElement('canvas'); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+    const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+    await pg.render({ canvasContext: g, viewport: vp }).promise;
+    const a = await addAsset(c.toDataURL('image/jpeg', 0.86));
+    pages.push({ ...newPage({ color: '#FFFFFF', pattern: 'none' }), bgImg: { a, w: c.width, h: c.height } });
+  }
+  return pages;
+}
+async function imagesToPages(files) {
+  const pages = [];
+  for (const f of files) {
+    const { src, w, h } = await normalizeImage(await readAsDataURL(f)), a = await addAsset(src);
+    pages.push({ ...newPage({ color: '#FFFFFF', pattern: 'none' }), bgImg: { a, w, h } });
+  }
+  return pages;
+}
+// any supported file(s) -> board pages
+async function filesToPages(files) {
+  const f = files[0], n = f.name.toLowerCase();
+  if (/\.doc$/.test(n)) throw new Error('Old .doc files can’t be read. In Word, use Save As → .docx (or PDF), then import that.');
+  if (/\.ppt$/.test(n)) throw new Error('Old .ppt files can’t be read. In PowerPoint, use Save As → .pptx (or PDF), then import that.');
+  if (/\.pdf$/.test(n) || f.type === 'application/pdf') return pdfToPages(f);
+  if (/\.docx$/.test(n)) { toast('Reading Word document…'); return docxToPages(await f.arrayBuffer()); }
+  if (/\.pptx$/.test(n)) { toast('Reading PowerPoint…'); return pptxToPages(await f.arrayBuffer()); }
+  if (/\.(txt|md|markdown)$/.test(n) || /^text\//.test(f.type)) return textToPages(await readAsText(f));
+  const imgs = files.filter(x => /^image\//.test(x.type)); if (imgs.length) return imagesToPages(imgs);
+  throw new Error('Likhi can’t open that kind of file');
+}
+// insert pages into the current board (after the current page; replaces it if it's empty)
+async function insertPagesFrom(files) {
+  closePops();
+  try {
+    const pages = await filesToPages(files); if (!pages || !pages.length) return;
+    const empty = !curPage().objects.length && !curPage().bgImg, at = empty ? App.cur : App.cur + 1;
+    commit(() => { const all = App.doc.pages.slice(); all.splice(at, empty ? 1 : 0, ...pages); setPages(all); App.cur = at; });
+    emit('pagechange'); toast(`${pages.length} page${pages.length > 1 ? 's' : ''} added`);
+  } catch (e) { toast(e && e.message ? e.message : 'That file could not be opened'); }
+}
+
+// ---------- export ----------
+const safeName = () => (App.board.name || 'Board').replace(/[\\/:*?"<>|]/g, '-');
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+async function pageJPEGs(maxW = 1920) {
+  const out = [];
+  for (const p of App.doc.pages) { const c = renderPageCanvas(p, maxW); out.push({ b: new Uint8Array(await (await canvasBlob(c, 'image/jpeg', 0.9)).arrayBuffer()), w: c.width, h: c.height, page: p }); await new Promise(r => setTimeout(r, 0)); }
+  return out;
+}
+async function buildDocx() {
+  const imgs = await pageJPEGs(1800), W = 9601200; // 10.5 inch wide picture on a landscape A4 page
+  let body = '';
+  imgs.forEach((im, i) => {
+    const H = Math.round(W * im.h / im.w), id = i + 1;
+    body += `<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${W}" cy="${H}"/><wp:docPr id="${id}" name="Page ${id}"/>` +
+      `<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">` +
+      `<pic:nvPicPr><pic:cNvPr id="${id}" name="page${id}.jpeg"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="rIdImg${id}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill>` +
+      `<pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${W}" cy="${H}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>`;
+    const texts = im.page.objects.filter(o => o.t === 'x').sort((a, b) => a.y - b.y || a.x - b.x).map(o => o.s);
+    for (const t of texts) for (const line of t.split('\n')) body += `<w:p><w:r><w:t xml:space="preserve">${esc(line)}</w:t></w:r></w:p>`;
+    if (i < imgs.length - 1) body += '<w:p><w:r><w:br w:type="page"/></w:r></w:p>';
+  });
+  const doc = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"><w:body>${body}<w:sectPr><w:pgSz w:w="16838" w:h="11906" w:orient="landscape"/><w:pgMar w:top="720" w:right="720" w:bottom="720" w:left="720" w:header="0" w:footer="0" w:gutter="0"/></w:sectPr></w:body></w:document>`;
+  const rels = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${imgs.map((_, i) => `<Relationship Id="rIdImg${i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/page${i + 1}.jpeg"/>`).join('')}</Relationships>`;
+  return zip([
+    ['[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="jpeg" ContentType="image/jpeg"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/></Types>'],
+    ['_rels/.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/></Relationships>'],
+    ['docProps/core.xml', coreXml()],
+    ['word/document.xml', doc], ['word/_rels/document.xml.rels', rels],
+    ...imgs.map((im, i) => [`word/media/page${i + 1}.jpeg`, im.b])
+  ], 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+}
+function coreXml() {
+  const t = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title>${esc(App.board.name || 'Likhi board')}</dc:title><dc:creator>Likhi ${APP_VERSION}</dc:creator><dcterms:created xsi:type="dcterms:W3CDTF">${t}</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">${t}</dcterms:modified></cp:coreProperties>`;
+}
+async function buildPptx() {
+  const imgs = await pageJPEGs(1920), CX = 12192000, CY = 6858000, N = imgs.length;
+  const P = 'http://schemas.openxmlformats.org/presentationml/2006/main', A = 'http://schemas.openxmlformats.org/drawingml/2006/main', R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+  const RT = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/', CT = 'application/vnd.openxmlformats-officedocument.presentationml.';
+  const relsXml = list => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${list.map(([id, type, target]) => `<Relationship Id="${id}" Type="${RT}${type}" Target="${target}"/>`).join('')}</Relationships>`;
+  const emptyTree = '<p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/><a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr></p:spTree>';
+  const theme = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><a:theme xmlns:a="${A}" name="Likhi"><a:themeElements><a:clrScheme name="Likhi"><a:dk1><a:srgbClr val="1E2B25"/></a:dk1><a:lt1><a:srgbClr val="FFFFFF"/></a:lt1><a:dk2><a:srgbClr val="1F4D3A"/></a:dk2><a:lt2><a:srgbClr val="F7F3E8"/></a:lt2><a:accent1><a:srgbClr val="1F4D3A"/></a:accent1><a:accent2><a:srgbClr val="F2C94C"/></a:accent2><a:accent3><a:srgbClr val="1E88E5"/></a:accent3><a:accent4><a:srgbClr val="E53935"/></a:accent4><a:accent5><a:srgbClr val="43A047"/></a:accent5><a:accent6><a:srgbClr val="8E24AA"/></a:accent6><a:hlink><a:srgbClr val="1E88E5"/></a:hlink><a:folHlink><a:srgbClr val="8E24AA"/></a:folHlink></a:clrScheme>` +
+    `<a:fontScheme name="Likhi"><a:majorFont><a:latin typeface="Calibri"/><a:ea typeface=""/><a:cs typeface=""/></a:majorFont><a:minorFont><a:latin typeface="Calibri"/><a:ea typeface=""/><a:cs typeface=""/></a:minorFont></a:fontScheme>` +
+    `<a:fmtScheme name="Likhi"><a:fillStyleLst><a:solidFill><a:schemeClr val="phClr"/></a:solidFill><a:solidFill><a:schemeClr val="phClr"/></a:solidFill><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:fillStyleLst>` +
+    `<a:lnStyleLst><a:ln w="9525"><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:ln><a:ln w="19050"><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:ln><a:ln w="28575"><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:ln></a:lnStyleLst>` +
+    `<a:effectStyleLst><a:effectStyle><a:effectLst/></a:effectStyle><a:effectStyle><a:effectLst/></a:effectStyle><a:effectStyle><a:effectLst/></a:effectStyle></a:effectStyleLst>` +
+    `<a:bgFillStyleLst><a:solidFill><a:schemeClr val="phClr"/></a:solidFill><a:solidFill><a:schemeClr val="phClr"/></a:solidFill><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:bgFillStyleLst></a:fmtScheme></a:themeElements></a:theme>`;
+  const master = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:sldMaster xmlns:a="${A}" xmlns:r="${R}" xmlns:p="${P}"><p:cSld><p:bg><p:bgRef idx="1001"><a:schemeClr val="bg1"/></p:bgRef></p:bg>${emptyTree}</p:cSld><p:clrMap bg1="lt1" tx1="dk1" bg2="lt2" tx2="dk2" accent1="accent1" accent2="accent2" accent3="accent3" accent4="accent4" accent5="accent5" accent6="accent6" hlink="hlink" folHlink="folHlink"/><p:sldLayoutIdLst><p:sldLayoutId id="2147483649" r:id="rId1"/></p:sldLayoutIdLst></p:sldMaster>`;
+  const layout = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:sldLayout xmlns:a="${A}" xmlns:r="${R}" xmlns:p="${P}" type="blank" preserve="1"><p:cSld name="Blank">${emptyTree}</p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sldLayout>`;
+  const slide = (im, i) => {
+    const h = Math.round(CX * im.h / im.w), w = h > CY ? Math.round(CY * im.w / im.h) : CX, hh = Math.min(h, CY), x = Math.round((CX - w) / 2), y = Math.round((CY - hh) / 2);
+    return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:sld xmlns:a="${A}" xmlns:r="${R}" xmlns:p="${P}"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/><a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr>` +
+      `<p:pic><p:nvPicPr><p:cNvPr id="2" name="Board page ${i + 1}"/><p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr/></p:nvPicPr><p:blipFill><a:blip r:embed="rId2"/><a:stretch><a:fillRect/></a:stretch></p:blipFill>` +
+      `<p:spPr><a:xfrm><a:off x="${x}" y="${y}"/><a:ext cx="${w}" cy="${hh}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic></p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>`;
+  };
+  const pres = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:presentation xmlns:a="${A}" xmlns:r="${R}" xmlns:p="${P}" saveSubsetFonts="1"><p:sldMasterIdLst><p:sldMasterId id="2147483648" r:id="rId1"/></p:sldMasterIdLst><p:sldIdLst>${imgs.map((_, i) => `<p:sldId id="${256 + i}" r:id="rId${i + 3}"/>`).join('')}</p:sldIdLst><p:sldSz cx="${CX}" cy="${CY}"/><p:notesSz cx="6858000" cy="9144000"/></p:presentation>`;
+  return zip([
+    ['[Content_Types].xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="jpeg" ContentType="image/jpeg"/>` +
+      `<Override PartName="/ppt/presentation.xml" ContentType="${CT}presentation.main+xml"/><Override PartName="/ppt/slideMasters/slideMaster1.xml" ContentType="${CT}slideMaster+xml"/><Override PartName="/ppt/slideLayouts/slideLayout1.xml" ContentType="${CT}slideLayout+xml"/><Override PartName="/ppt/theme/theme1.xml" ContentType="application/vnd.openxmlformats-officedocument.theme+xml"/><Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>` +
+      imgs.map((_, i) => `<Override PartName="/ppt/slides/slide${i + 1}.xml" ContentType="${CT}slide+xml"/>`).join('') + '</Types>'],
+    ['_rels/.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="${RT}officeDocument" Target="ppt/presentation.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/></Relationships>`],
+    ['docProps/core.xml', coreXml()],
+    ['ppt/presentation.xml', pres],
+    ['ppt/_rels/presentation.xml.rels', relsXml([['rId1', 'slideMaster', 'slideMasters/slideMaster1.xml'], ['rId2', 'theme', 'theme/theme1.xml'], ...imgs.map((_, i) => [`rId${i + 3}`, 'slide', `slides/slide${i + 1}.xml`])])],
+    ['ppt/slideMasters/slideMaster1.xml', master], ['ppt/slideMasters/_rels/slideMaster1.xml.rels', relsXml([['rId1', 'slideLayout', '../slideLayouts/slideLayout1.xml'], ['rId2', 'theme', '../theme/theme1.xml']])],
+    ['ppt/slideLayouts/slideLayout1.xml', layout], ['ppt/slideLayouts/_rels/slideLayout1.xml.rels', relsXml([['rId1', 'slideMaster', '../slideMasters/slideMaster1.xml']])],
+    ['ppt/theme/theme1.xml', theme],
+    ...imgs.flatMap((im, i) => [[`ppt/slides/slide${i + 1}.xml`, slide(im, i)], [`ppt/slides/_rels/slide${i + 1}.xml.rels`, relsXml([['rId1', 'slideLayout', '../slideLayouts/slideLayout1.xml'], ['rId2', 'image', `../media/page${i + 1}.jpeg`]])], [`ppt/media/page${i + 1}.jpeg`, im.b]])
+  ], 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
+}
+function buildNotes() {
+  let out = `${App.board.name || 'Likhi board'}\n${'='.repeat(Math.min(60, (App.board.name || 'Likhi board').length))}\n\n`;
+  App.doc.pages.forEach((p, i) => {
+    const texts = p.objects.filter(o => o.t === 'x').sort((a, b) => a.y - b.y || a.x - b.x).map(o => o.s);
+    const draw = p.objects.some(o => o.t !== 'x') || p.bgImg;
+    out += `Page ${i + 1}\n${'-'.repeat(String(i + 1).length + 5)}\n` + (texts.length ? texts.join('\n\n') + '\n' : '') + (draw ? '(this page also has drawings — see the PDF export)\n' : '') + (!texts.length && !draw ? '(empty)\n' : '') + '\n';
+  });
+  return new Blob([out], { type: 'text/plain;charset=utf-8' });
+}
+async function exportAs(kind) {
+  closePops(); const n = safeName();
+  try {
+    if (kind === 'png') return exportPagePNG();
+    if (kind === 'pdf') { toast('Making the PDF…'); downloadBlob(await buildPDF(), n + '.pdf'); }
+    else if (kind === 'docx') { toast('Making the Word document…'); downloadBlob(await buildDocx(), n + '.docx'); }
+    else if (kind === 'pptx') { toast('Making the PowerPoint…'); downloadBlob(await buildPptx(), n + '.pptx'); }
+    else if (kind === 'txt') downloadBlob(buildNotes(), n + ' - notes.txt');
+    else if (kind === 'likhi') downloadBlob(new Blob([JSON.stringify(boardData())], { type: 'application/json' }), n + '.likhi');
+    toast('Saved to your Downloads folder');
+  } catch (e) { toast('Export failed — ' + (e.message || 'please try again')); }
+}
+
+// ---- 08j-settings.js ----
+// ===== Settings screen (general, writing, sound, look, backup, developer, about) =====
+App.errLog = []; App.ptrTypes = new Set();
+window.addEventListener('error', e => { App.errLog.push({ t: new Date().toISOString(), m: String(e.message || e.error), at: (e.filename || '').split('/').pop() + ':' + e.lineno }); if (App.errLog.length > 50) App.errLog.shift(); });
+window.addEventListener('unhandledrejection', e => { App.errLog.push({ t: new Date().toISOString(), m: 'Promise: ' + String(e.reason && e.reason.message || e.reason) }); if (App.errLog.length > 50) App.errLog.shift(); });
+document.addEventListener('pointerdown', e => App.ptrTypes.add(e.pointerType), true);
+
+const SET_SECTIONS = [['general', 'Settings', 'General'], ['writing', 'Pen', 'Writing'], ['sound', 'Volume2', 'Sound'], ['look', 'Palette', 'Look'],
+  ['backup', 'Download', 'Backup & restore'], ['dev', 'Sigma', 'Developer'], ['about', 'Info', 'About & credits']];
+let setSection = 'general';
+function openSettings(sec) { closePops(); if (sec) setSection = sec; $('#settings').classList.add('show'); renderSettings(); }
+function closeSettings() { $('#settings').classList.remove('show'); }
+function renderSettings() {
+  const el = $('#settings'), S = App.settings;
+  const sw = (key, title, sub) => `<div class="set-row"><div class="t">${title}${sub ? `<small>${sub}</small>` : ''}</div><button class="switch ${S[key] ? 'on' : ''}" data-sw="${key}" aria-label="${title}"></button></div>`;
+  const seg = (key, opts) => `<div class="seg" data-seg="${key}">${opts.map(([v, n]) => `<button class="${S[key] === v ? 'on' : ''}" data-v="${v}">${n}</button>`).join('')}</div>`;
+  let body = '';
+  if (setSection === 'general') body = `<h3>General</h3>
+    <div class="set-row"><div class="t">When Likhi opens<small>Show all your boards, or jump straight back into the last one</small></div></div>${seg('start', [['dashboard', 'Dashboard'], ['last', 'Last board']])}
+    <div class="set-row" style="margin-top:10px"><div class="t">New boards start as<small>Used by “New board” in the menu</small></div></div>
+    <div class="grid" style="grid-template-columns:repeat(5,1fr)">${BOARD_KINDS.filter(k => !k.infinite).map(k => `<button class="bgsw ${S.newBg.color === k.bg.color && S.newBg.pattern === k.bg.pattern ? 'on' : ''}" data-newbg="${k.k}" style="background:${k.bg.color};color:${isDark(k.bg.color) ? '#fff' : '#333'}">${k.name.split(' ')[0]}</button>`).join('')}</div>
+    <div class="set-row" style="margin-top:14px"><div class="t">Full screen<small>Great on smart boards</small></div><button class="wide" style="width:auto;padding:0 16px" id="sFull">${icon('Expand', 18)} Toggle</button></div>`;
+  else if (setSection === 'writing') body = `<h3>Writing</h3>
+    <div class="set-row"><div class="t">Handwriting smoothing<small>Chalk always stays rough on purpose</small></div></div>${seg('smoothing', [[0, 'Off'], [1, 'Low'], [2, 'High']])}
+    ${sw('palm', 'Palm rejection', 'Ignores your hand resting on the board')}${sw('penOnly', 'Pen only', 'Fingers can’t draw (stylus boards)')}${sw('recog', 'Smart shapes', 'Rough circles, boxes and lines become neat ones (Pen and Chalk)')}`;
+  else if (setSection === 'sound') body = `<h3>Sound</h3>
+    ${sw('sound', 'Pen writing sounds', 'A soft scratch while you write. Chalk sounds scratchier. Off by default.')}
+    <div class="set-row"><div class="t">Volume</div><input type="range" min="0.1" max="1" step="0.05" value="${S.volume}" id="sVol" style="width:200px"><b id="sVolV" style="min-width:44px;text-align:right">${Math.round(S.volume * 100)}%</b></div>
+    <button class="wide" id="sTestSnd" style="margin-top:6px">${icon('Volume2', 18)} Test the sound</button>
+    <p class="hint">The timer’s alarm always plays, even when pen sounds are off.</p>`;
+  else if (setSection === 'look') body = `<h3>Look</h3>
+    ${sw('dark', 'Dark mode', 'Dark toolbars and menus')}
+    ${sw('bigTools', 'Big toolbar', 'Larger buttons — easier to tap on big smart boards')}
+    <div class="set-row"><div class="t">Toolbar position</div></div>${seg('dock', [['left', 'Left'], ['bottom', 'Bottom'], ['right', 'Right']])}`;
+  else if (setSection === 'backup') body = `<h3>Backup & restore</h3>
+    <p class="hint" style="font-size:14px">Your preferences are pens and their colours and sizes, colour presets, eraser, laser, shapes and text style, and all settings here. Move them to another computer or keep a backup.</p>
+    <label class="set-row"><div class="t">Include my templates<small>${myTemplates().length} saved template${myTemplates().length === 1 ? '' : 's'}</small></div><input type="checkbox" id="sTplInc" checked style="width:22px;height:22px;accent-color:var(--green)"></label>
+    <div class="row" style="gap:10px;margin-top:6px"><button class="wide primary" id="sExp">${icon('Download', 18)} Export preferences</button><button class="wide" id="sImp">${icon('FolderOpen', 18)} Import preferences</button></div>
+    <h3 style="margin-top:24px">Boards</h3><p class="hint" style="font-size:14px">Boards are saved in this browser automatically. To keep a board somewhere else, open it and use Menu → Export → Likhi file.</p>`;
+  else if (setSection === 'dev') body = `<h3>Developer</h3>
+    ${sw('perf', 'Performance meter', 'Shows frames per second, draw time and object counts on screen')}
+    <div class="devinfo" id="devInfo">Loading…</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:10px">
+      <button class="chip" id="dSpeed">${icon('Gauge', 14)} Run speed test</button><button class="chip" id="dCopy">${icon('ClipboardCopy', 14)} Copy diagnostics</button>
+      <button class="chip" id="dLog">${icon('Info', 14)} Error log (${App.errLog.length})</button><button class="chip" id="dClean">${icon('BrushCleaning' in ICONS ? 'BrushCleaning' : 'Trash2', 14)} Clean up unused pictures</button></div>
+    <pre class="devout" id="devOut"></pre>
+    <h3 style="margin-top:20px;color:var(--danger)">Danger zone</h3>
+    <div class="row" style="gap:10px"><button class="wide danger" id="dReset">Reset all settings</button><button class="wide danger" id="dWipe">Delete all boards and data</button></div>`;
+  else body = `<div class="about"><svg width="72" height="72" viewBox="0 0 44 44"><rect x="2" y="2" width="40" height="40" rx="10" fill="#1F4D3A"/><path d="M11 30 C15 18, 19 14, 21 24 S 28 30, 33 14" stroke="#F7F3E8" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="33" cy="14" r="3" fill="#F2C94C"/></svg>
+    <h2>likhi</h2><p class="ver">Version ${APP_VERSION} · built ${APP_BUILD}</p><p class="tag"><i>${APP_CREDITS.tagline}</i></p></div>
+    <h3>Credits</h3><div class="credits">
+    <div><b>Created by</b><span>${APP_CREDITS.by}</span></div>
+    <div><b>Name</b><span>“Likhi” comes from লিখি — Bangla for “I write”.</span></div>
+    <div><b>PDF reading</b><span>PDF.js by Mozilla — Apache License 2.0</span></div>
+    <div><b>Icons</b><span>Lucide — ISC License</span></div>
+    <div><b>Windows app</b><span>Electron — MIT License</span></div></div>
+    <h3>What’s new in 1.1</h3><ul class="news"><li>Dashboard with all your boards and new board types</li><li>Import Word, PowerPoint and notes; export to Word, PowerPoint, PDF, picture and notes</li><li>Settings, with backup of your preferences and developer tools</li><li>Optional pen writing sounds</li><li>Rougher, more real chalk</li></ul>
+    <h3>Keyboard</h3><p class="hint" style="font-size:13px;line-height:1.8">Ctrl+Z undo · Ctrl+Y redo · Ctrl+S save · Ctrl+O dashboard · Ctrl+P print · Ctrl+C / X / V copy, cut, paste · Ctrl+D clone · Delete · Arrows nudge · Esc close</p>
+    <p class="hint" style="text-align:center;margin-top:16px">Free for every teacher and student.</p>`;
+  el.innerHTML = `<div class="sbox"><nav>${SET_SECTIONS.map(([k, ic, n]) => `<button class="${k === setSection ? 'on' : ''}" data-sec="${k}">${icon(ic, 18)}<span>${n}</span></button>`).join('')}<div class="grow"></div><small class="sver">v${APP_VERSION}</small></nav>
+    <section>${body}</section><button class="btn sclose" title="Close">${icon('X')}</button></div>`;
+  $$('[data-sec]', el).forEach(b => b.onclick = () => { setSection = b.dataset.sec; renderSettings(); });
+  $('.sclose', el).onclick = closeSettings; el.onclick = e => { if (e.target === el) closeSettings(); };
+  $$('[data-sw]', el).forEach(b => b.onclick = () => { S[b.dataset.sw] = !S[b.dataset.sw]; savePrefs(); applySettings(); renderSettings(); });
+  $$('[data-seg]', el).forEach(g => $$('button', g).forEach(b => b.onclick = () => { const k = g.dataset.seg, v = b.dataset.v; S[k] = k === 'smoothing' ? +v : v; savePrefs(); applySettings(); renderSettings(); }));
+  $$('[data-newbg]', el).forEach(b => b.onclick = () => { S.newBg = { ...BOARD_KINDS.find(k => k.k === b.dataset.newbg).bg }; savePrefs(); renderSettings(); });
+  const q = id => $(id, el);
+  if (q('#sFull')) q('#sFull').onclick = toggleFullscreen;
+  if (q('#sVol')) q('#sVol').oninput = e => { S.volume = +e.target.value; q('#sVolV').textContent = Math.round(S.volume * 100) + '%'; savePrefs(); };
+  if (q('#sTestSnd')) q('#sTestSnd').onclick = testPenSound;
+  if (q('#sExp')) q('#sExp').onclick = () => exportPrefs(q('#sTplInc').checked);
+  if (q('#sImp')) q('#sImp').onclick = importPrefs;
+  if (setSection === 'dev') devPanel(el);
+}
+function testPenSound() {
+  const was = App.settings.sound; App.settings.sound = true;
+  const h = penSoundStart('hard'); App.settings.sound = was; if (!h) { toast('Sound is not available here'); return; }
+  let t = 0; const iv = setInterval(() => { penSoundUpdate(h, 0.8 + Math.sin(t++ / 2) * 0.7); if (t > 14) { clearInterval(iv); penSoundStop(h); } }, 50);
+}
+
+// ---------- preferences backup ----------
+function exportPrefs(withTpl) {
+  const data = { app: 'likhi-preferences', version: APP_VERSION, saved: new Date().toISOString(), settings: App.settings, pen: App.pen, penPrefs: App.penPrefs, presets: App.presets,
+    eraser: App.eraser, laser: App.laser, style: App.style, textStyle: App.textStyle, shapeSel: App.shapeSel };
+  if (withTpl) data.templates = myTemplates();
+  downloadBlob(new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' }), 'likhi-preferences.json');
+  toast('Preferences saved to your Downloads folder');
+}
+async function importPrefs() {
+  const [f] = await pickFiles('.json,application/json'); if (!f) return;
+  try {
+    const d = JSON.parse(await readAsText(f)); if (!d || d.app !== 'likhi-preferences') throw 0;
+    if (d.settings) Object.assign(App.settings, d.settings);
+    if (d.penPrefs) for (const k in d.penPrefs) if (App.penPrefs[k]) Object.assign(App.penPrefs[k], d.penPrefs[k]);
+    if (Array.isArray(d.presets) && d.presets.length) App.presets = d.presets.filter(c => /^#[0-9a-f]{3,8}$/i.test(c));
+    for (const k of ['eraser', 'laser', 'style', 'textStyle', 'shapeSel']) if (d[k]) Object.assign(App[k], d[k]);
+    if (d.pen && PENS[d.pen]) App.pen = d.pen;
+    let tplN = 0; if (Array.isArray(d.templates)) { const mine = myTemplates(), ids = new Set(mine.map(t => t.id)); const add = d.templates.filter(t => !ids.has(t.id)); tplN = add.length; try { localStorage.setItem('likhi.templates', JSON.stringify(mine.concat(add))); } catch (e) {} }
+    savePrefs(); saveToolPrefs(); applySettings(); refreshDock(); renderSettings();
+    toast('Preferences imported' + (tplN ? ` (+${tplN} template${tplN > 1 ? 's' : ''})` : ''));
+  } catch (e) { toast('That is not a Likhi preferences file'); }
+}
+
+// ---------- developer tools ----------
+async function devInfo() {
+  let storage = 'unknown'; try { const e = await navigator.storage.estimate(); storage = (e.usage / 1048576).toFixed(1) + ' MB used of ' + Math.round(e.quota / 1048576) + ' MB'; } catch (e) {}
+  const boards = await boardIndex(), objs = App.doc.pages.reduce((s, p) => s + p.objects.length, 0);
+  return [['Version', `${APP_VERSION} (${APP_BUILD})`], ['Running as', window.likhiDesktop ? 'Windows app' : /^https?:/.test(location.protocol) ? 'Website' : 'Local file'],
+    ['Browser', navigator.userAgent.replace(/^Mozilla\/5\.0 /, '')], ['Screen', `${screen.width}×${screen.height} · window ${VW}×${VH} · pixel ratio ${DPR}`],
+    ['Touch points', navigator.maxTouchPoints || 0], ['Inputs used', [...App.ptrTypes].join(', ') || '—'], ['Canvas', `${cvScene.width}×${cvScene.height}`],
+    ['This board', `${App.doc.pages.length} pages · ${objs} objects · ${App.history.length} undo steps`], ['Saved boards', boards.length], ['Storage', storage],
+    ['Pictures in memory', Object.keys(App.assets).length]];
+}
+async function devPanel(el) {
+  const info = await devInfo(); const box = $('#devInfo', el); if (!box) return;
+  box.innerHTML = info.map(([k, v]) => `<div><b>${k}</b><span>${String(v).replace(/</g, '&lt;')}</span></div>`).join('');
+  const out = $('#devOut', el);
+  $('#dSpeed', el).onclick = () => { out.textContent = 'Running…'; setTimeout(() => out.textContent = speedTest(), 30); };
+  $('#dCopy', el).onclick = async () => { const t = (await devInfo()).map(([k, v]) => k + ': ' + v).join('\n') + '\n\nErrors:\n' + (App.errLog.map(e => `${e.t} ${e.m} ${e.at || ''}`).join('\n') || 'none');
+    try { await navigator.clipboard.writeText(t); toast('Diagnostics copied'); } catch (e) { out.textContent = t; } };
+  $('#dLog', el).onclick = () => { out.textContent = App.errLog.length ? App.errLog.map(e => `${e.t}  ${e.m}  ${e.at || ''}`).join('\n') : 'No errors recorded in this session.'; };
+  $('#dClean', el).onclick = async () => {
+    const keep = new Set(); for (const b of await boardIndex()) { const d = await Store.get('board:' + b.id); if (d) for (const id of usedAssets(d.pages)) keep.add(id); }
+    for (const id of usedAssets(App.doc.pages)) keep.add(id); for (const t of myTemplates()) for (const id of Object.keys(t.assets || {})) keep.add(id);
+    let n = 0; for (const k of await Store.keys()) if (String(k).startsWith('asset:') && !keep.has(k.slice(6))) { await Store.del(k); n++; }
+    out.textContent = `Removed ${n} unused picture${n === 1 ? '' : 's'}.`; devPanel(el);
+  };
+  $('#dReset', el).onclick = async () => { if (!(await confirmBox('Reset all settings?', 'Pens, colours and settings go back to how they were at first. Your boards are kept.', 'Reset', true))) return;
+    for (const k of Object.keys(localStorage)) if (k.startsWith('likhi.') && !/templates|lastBoard/.test(k)) localStorage.removeItem(k); location.reload(); };
+  $('#dWipe', el).onclick = async () => { if (!(await confirmBox('Delete everything?', 'All boards, templates, pictures and settings in this browser will be deleted for good.', 'Delete everything', true))) return;
+    for (const k of Object.keys(localStorage)) if (k.startsWith('likhi.')) localStorage.removeItem(k); try { indexedDB.deleteDatabase('likhi'); } catch (e) {} setTimeout(() => location.reload(), 300); };
+}
+function speedTest() {
+  const c = document.createElement('canvas'); c.width = 1920; c.height = 1080; const g = c.getContext('2d'), objs = [], pens = Object.keys(PENS);
+  for (let i = 0; i < 1000; i++) { const p = [], x0 = (i * 37) % 1800, y0 = (i * 53) % 1000; for (let k = 0; k < 50; k++) p.push(x0 + k * 4, y0 + Math.sin(k / 5) * 20, 5); objs.push({ t: 's', id: 't' + i, pen: pens[i % pens.length], c: '#335', w: 5, p, tex: 'star', sd: i }); }
+  let t = performance.now(); for (const o of objs) drawObject(g, o); const first = performance.now() - t;
+  t = performance.now(); for (let r = 0; r < 3; r++) { g.clearRect(0, 0, 1920, 1080); for (const o of objs) drawObject(g, o); } const again = (performance.now() - t) / 3;
+  return `1000 strokes, first draw: ${first.toFixed(1)} ms\n1000 strokes, redraw (cached): ${again.toFixed(1)} ms\nRedraws per second at this size: about ${Math.round(1000 / Math.max(1, again))}\n(Under 16 ms means smooth at 60 fps.)`;
+}
+// floating performance meter
+let perfEl = null, perfOn = false, perfFrames = 0, perfLast = 0;
+function perfMeter(on) {
+  if (on === perfOn) return; perfOn = on;
+  if (!on) { if (perfEl) perfEl.remove(); perfEl = null; return; }
+  perfEl = document.createElement('div'); perfEl.id = 'perf'; document.body.appendChild(perfEl); perfLast = performance.now(); perfFrames = 0;
+  const loop = () => {
+    if (!perfOn) return; perfFrames++; const t = performance.now();
+    if (t - perfLast > 500) {
+      const fps = Math.round(perfFrames * 1000 / (t - perfLast)); perfFrames = 0; perfLast = t;
+      perfEl.innerHTML = `<b style="color:${fps >= 50 ? '#7CFC9A' : fps >= 30 ? '#F2C94C' : '#FF6B6B'}">${fps} fps</b> · draw ${(App.lastFrameMs || 0).toFixed(1)} ms · ${curPage().objects.length} objects · page ${App.cur + 1}/${App.doc.pages.length} · ${Math.round(view().zoom / fitZoom() * 100)}%`;
+    }
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+}
+
+// ---- 08k-sound.js ----
+// ===== Pen writing sounds (off by default — Settings → Sound) =====
+let sndCtx = null, noiseBuf = null;
+function sndInit() {
+  if (sndCtx) return sndCtx;
+  try {
+    sndCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const len = sndCtx.sampleRate * 2; noiseBuf = sndCtx.createBuffer(1, len, sndCtx.sampleRate);
+    const d = noiseBuf.getChannelData(0); let b0 = 0, b1 = 0, b2 = 0;
+    for (let i = 0; i < len; i++) { // soft "paper" noise
+      const w = Math.random() * 2 - 1; b0 = 0.99765 * b0 + w * 0.099; b1 = 0.963 * b1 + w * 0.2965; b2 = 0.57 * b2 + w * 1.0526;
+      d[i] = (b0 + b1 + b2 + w * 0.1848) * 0.22;
+    }
+  } catch (e) { sndCtx = null; }
+  return sndCtx;
+}
+const SND_STYLE = { // band-pass centre and sharpness per pen
+  hard: [2600, 0.9, 1], hl: [1500, 0.7, 0.8], ink: [1800, 0.8, 0.9], bamboo: [1400, 0.7, 0.9],
+  chalk: [3400, 0.5, 1.5], tex: [2200, 0.8, 0.8], magic: [3000, 1.2, 0.8]
+};
+function penSoundStart(pen) {
+  if (!App.settings.sound || !sndInit()) return null;
+  try {
+    if (sndCtx.state === 'suspended') sndCtx.resume();
+    const [f, q, k] = SND_STYLE[pen] || SND_STYLE.hard;
+    const src = sndCtx.createBufferSource(); src.buffer = noiseBuf; src.loop = true; src.playbackRate.value = 0.9 + Math.random() * 0.2;
+    const bp = sndCtx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = q;
+    const g = sndCtx.createGain(); g.gain.value = 0;
+    src.connect(bp); bp.connect(g); g.connect(sndCtx.destination); src.start();
+    return { src, g, k, rough: pen === 'chalk' };
+  } catch (e) { return null; }
+}
+function penSoundUpdate(h, speed) {
+  if (!h) return;
+  let v = clamp(speed * 0.35, 0, 1) * h.k * App.settings.volume * 0.5;
+  if (h.rough) v *= 0.6 + Math.random() * 0.8; // scratchy chalk
+  h.g.gain.setTargetAtTime(v, sndCtx.currentTime, 0.025);
+}
+function penSoundStop(h) {
+  if (!h) return;
+  try { h.g.gain.setTargetAtTime(0, sndCtx.currentTime, 0.03); h.src.stop(sndCtx.currentTime + 0.2); } catch (e) {}
+}
+
 // ---- 09-main.js ----
 // ===== Startup =====
 on('docchange', () => {
@@ -3490,16 +4387,16 @@ document.addEventListener('keydown', e => {
   else if (mod && (k === 'y' || (k === 'z' && e.shiftKey))) { e.preventDefault(); redo(); }
   else if (k === 'escape') { closePops(); closePages(); }
 });
-window.addEventListener('beforeunload', () => { try { Store.put('autosave', serializeDoc()); } catch (e) {} });
+window.addEventListener('beforeunload', () => { try { if (App.board.id && !App.overlay) saveBoardNow(true); } catch (e) {} });
 
 async function start() {
   buildDock(); buildOverlayBar(); buildZoombar(); buildPagebar(); applySettings();
   if (App.overlay) { document.documentElement.style.background = 'transparent'; App.views.set(curPage().id, { x: 0, y: 0, zoom: 1 }); }
   setTool('pen'); resize();
-  await restoreAutosave();
+  await bootBoards();
   refreshPagebar(); refreshZoombar(); refreshDock(); invalidate(true);
 }
-window.Likhi = { App, buildPDF, renderPageCanvas, insertPdf, insertImages, boardData, openBoardFile, loadPdfJs, invalidate, handles, recognize, instHandles, lasersCount: () => lasers.length, undo, redo, setTool, goPage, addPage, setBg, view, toWorld, serializeDoc, loadDoc };
+window.Likhi = { App, openSettings, showDashboard, hideDashboard, createBoard, openBoardById, boardIndex, buildDocx, buildPptx, buildNotes, filesToPages, unzip, saveBoardNow, speedTest, buildPDF, renderPageCanvas, insertPdf, insertImages, boardData, openBoardFile, loadPdfJs, invalidate, handles, recognize, instHandles, lasersCount: () => lasers.length, undo, redo, setTool, goPage, addPage, setBg, view, toWorld, serializeDoc, loadDoc };
 start();
 
 })();</script>

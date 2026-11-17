@@ -1,4 +1,4 @@
-# Likhi — The board, reimagined.
+# Likhi v1.1 — The board, reimagined.
 
 Likhi is a free interactive whiteboard for teachers. It works on Windows smart boards, laptops and Macs, in any modern Chrome or Edge, and fully offline.
 
@@ -9,7 +9,7 @@ Likhi is a free interactive whiteboard for teachers. It works on Windows smart b
 | `index.html` | **The whole app in one file.** Double-click it to use Likhi offline, or put it on a website. |
 | `manifest.webmanifest`, `sw.js`, `icons/` | Let people **install** Likhi from the website and use it offline. |
 | `desktop/` | The **Windows app** project (Electron). GitHub builds the `.exe` from it. |
-| `.github/workflows/build-windows.yml` | The recipe GitHub uses to build `Likhi-Setup-1.0.0.exe` and `Likhi-Portable-1.0.0.exe`. |
+| `.github/workflows/build-windows.yml` | The recipe GitHub uses to build `Likhi-Setup-1.1.0.exe` and `Likhi-Portable-1.1.0.exe`. |
 
 ## 1. Use it right now (no internet needed)
 Double-click `index.html`. It opens in your browser and saves your board automatically.
@@ -32,10 +32,10 @@ GitHub builds it for free on its own Windows computers — you don't need a Wind
 1. Upload this folder to a GitHub repository (as above).
 2. Open the **Actions** tab → **Build Windows app** → **Run workflow**.
 3. Wait about 5 minutes, open the finished run, and download **Likhi-Windows** at the bottom. Inside:
-   - `Likhi-Setup-1.0.0.exe` — installer (Start menu + desktop shortcut, opens `.likhi` files)
-   - `Likhi-Portable-1.0.0.exe` — runs without installing (good for a USB stick)
+   - `Likhi-Setup-1.1.0.exe` — installer (Start menu + desktop shortcut, opens `.likhi` files)
+   - `Likhi-Portable-1.1.0.exe` — runs without installing (good for a USB stick)
 
-To publish a proper download page, push a tag: `git tag v1.0.0 && git push --tags`. The `.exe` files are then attached to a **Release**.
+To publish a proper download page, push a tag: `git tag v1.1.0 && git push --tags`. The `.exe` files are then attached to a **Release**.
 
 **First run on Windows:** the app isn't code-signed (certificates cost money), so Windows may show **"Windows protected your PC"**. Click **More info → Run anyway**. This is normal for free apps.
 
@@ -46,11 +46,18 @@ In the Windows app, **Insert → Draw on the screen** (or **Ctrl+Shift+D** from 
 
 In the browser version the same button takes a **screenshot** of a window or screen and puts it on a new page to write on.
 
+## New in 1.1
+- **Dashboard** with all your boards (search, sort, rename, duplicate, delete) and 8 board types to start from.
+- **Import** Word (.docx), PowerPoint (.pptx), notes (.txt/.md), PDF and pictures — as a new board from the dashboard, or into the open board from Insert.
+- **Export** as picture, PDF, Word, PowerPoint, notes or a Likhi file (Menu → Export this board as).
+- **Settings**: general, writing, sound, look, backup & restore of your preferences, developer tools, and about & credits.
+- Optional **pen writing sounds** (Settings → Sound, off by default) and **rough, realistic chalk**.
+
 ## Keyboard shortcuts
-Ctrl+Z undo · Ctrl+Y redo · Ctrl+S save · Ctrl+Shift+S save as · Ctrl+O open · Ctrl+P print · Ctrl+C/X/V copy/cut/paste · Ctrl+D clone · Delete · arrow keys nudge · Esc close menus.
+Ctrl+Z undo · Ctrl+Y redo · Ctrl+S save now · Ctrl+O dashboard · Ctrl+P print · Ctrl+C/X/V copy/cut/paste · Ctrl+D clone · Delete · arrow keys nudge · Esc close menus.
 
 ## Files
-Boards save as `.likhi` files (plain JSON with any pictures inside). Pages can also be exported as PNG, the whole board as PDF, printed, or emailed as a PDF.
+Boards save automatically inside the browser (or the Windows app) and show up on the dashboard. To move a board to another computer, export it as a `.likhi` file (plain JSON with any pictures inside) and open it there. Old `.doc` and `.ppt` files must first be saved as `.docx` / `.pptx` (or PDF).
 
 ## Building the Windows app on your own PC (optional)
 Needs Node.js 20+:
