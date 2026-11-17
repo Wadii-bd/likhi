@@ -48,22 +48,31 @@ jobs:
         working-directory: android-app
         run: npx cap sync android
 
+      - name: Set the app version
+        working-directory: android-app/android
+        run: |
+          sed -i 's/versionCode [0-9]*/versionCode 121/; s/versionName "[^"]*"/versionName "1.2.1"/' app/build.gradle
+          grep -E "versionCode|versionName|applicationId" app/build.gradle
+
       - name: Build the signed APK (uses your secret key)
         if: env.HAS_KEY == 'true'
-        working-directory: android-app
+        working-directory: android-app/android
         env:
           LIKHI_KEYSTORE: ${{ secrets.LIKHI_KEYSTORE }}
           LIKHI_KEYSTORE_PASSWORD: ${{ secrets.LIKHI_KEYSTORE_PASSWORD }}
           LIKHI_KEY_ALIAS: ${{ secrets.LIKHI_KEY_ALIAS }}
           LIKHI_KEY_PASSWORD: ${{ secrets.LIKHI_KEY_PASSWORD }}
         run: |
-          export PATH="$PATH:$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)"
+          BT="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)"
           echo "$LIKHI_KEYSTORE" | base64 -d > "$RUNNER_TEMP/likhi.keystore"
-          npx cap build android --androidreleasetype APK --signing-type apksigner \
-            --keystorepath "$RUNNER_TEMP/likhi.keystore" --keystorepass "$LIKHI_KEYSTORE_PASSWORD" \
-            --keystorealias "$LIKHI_KEY_ALIAS" --keystorealiaspass "$LIKHI_KEY_PASSWORD"
-          mkdir -p ../out
-          cp "$(find android/app/build/outputs/apk/release -name '*.apk' | head -1)" ../out/Likhi-1.2.1.apk
+          chmod +x gradlew
+          ./gradlew assembleRelease
+          "$BT/zipalign" -f -p 4 app/build/outputs/apk/release/app-release-unsigned.apk "$RUNNER_TEMP/aligned.apk"
+          mkdir -p ../../out
+          "$BT/apksigner" sign --ks "$RUNNER_TEMP/likhi.keystore" --ks-pass env:LIKHI_KEYSTORE_PASSWORD \
+            --ks-key-alias "$LIKHI_KEY_ALIAS" --key-pass env:LIKHI_KEY_PASSWORD \
+            --out ../../out/Likhi-1.2.1.apk "$RUNNER_TEMP/aligned.apk"
+          "$BT/apksigner" verify --verbose ../../out/Likhi-1.2.1.apk
 
       - name: Build a test APK (no key added yet)
         if: env.HAS_KEY != 'true'
