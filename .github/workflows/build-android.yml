@@ -57,6 +57,7 @@ jobs:
           LIKHI_KEY_ALIAS: ${{ secrets.LIKHI_KEY_ALIAS }}
           LIKHI_KEY_PASSWORD: ${{ secrets.LIKHI_KEY_PASSWORD }}
         run: |
+          export PATH="$PATH:$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)"
           echo "$LIKHI_KEYSTORE" | base64 -d > "$RUNNER_TEMP/likhi.keystore"
           npx cap build android --androidreleasetype APK --signing-type apksigner \
             --keystorepath "$RUNNER_TEMP/likhi.keystore" --keystorepass "$LIKHI_KEYSTORE_PASSWORD" \
