@@ -1,0 +1,16 @@
+{
+  "name": "likhi-android",
+  "version": "1.2.1",
+  "private": true,
+  "description": "Likhi for Android (Capacitor). The app itself is ../index.html — the build copies it into www/.",
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/filesystem": "^6.0.2",
+    "@capacitor/share": "^6.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^6.2.0"
+  }
+}

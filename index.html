@@ -475,7 +475,7 @@ function luminance(hex) { const [r, g, b] = hexToRgb(hex); return (0.2126 * r + 
 const isDark = hex => luminance(hex) < 0.45;
 
 // ---------- constants ----------
-const APP_VERSION = '1.2.0', APP_BUILD = '2026-11-17';
+const APP_VERSION = '1.2.1', APP_BUILD = '2026-11-17';
 const APP_CREDITS = { by: 'The Likhi team', tagline: 'The board, reimagined.' };
 const PAGE_W = 1920, PAGE_H = 1080;
 const PENS = {
@@ -3452,7 +3452,7 @@ async function saveBoardOld(as) {
   const name = await promptBox(as || !App.file.name ? 'Save board' : 'Save board', 'File name', suggestedName(), 'Save');
   if (!name) return false;
   downloadBlob(blob, name.replace(/\.likhi$/i, '') + '.likhi'); App.file = { name: name.replace(/\.likhi$/i, '') + '.likhi', handle: null };
-  toast('Saved to your Downloads folder'); return true;
+  toast(NATIVE ? 'Choose where to save it' : 'Saved to your Downloads folder'); return true;
 }
 async function openBoard() { return openFile(); }
 async function openBoardOld() {
@@ -3483,6 +3483,7 @@ function refreshTitle() {
   $('#fileName').textContent = n; document.title = (n ? n + ' — ' : '') + 'Likhi';
 }
 function downloadBlob(blob, name) {
+  if (typeof NATIVE !== 'undefined' && NATIVE && NFS) { nativeShareBlob(blob, name); return; }
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
 }
@@ -3545,7 +3546,8 @@ async function exportPDF() {
   const blob = await buildPDF(); downloadBlob(blob, suggestedName() + '.pdf'); toast('PDF saved to your Downloads folder');
 }
 async function printBoard() {
-  closePops(); toast('Preparing to print…');
+  closePops();
+  if (NATIVE) { toast('Making the PDF — choose Print in the menu that opens'); return nativeShareBlob(await buildPDF(), suggestedName() + '.pdf', 'Print or share'); } toast('Preparing to print…');
   const area = document.createElement('div'); area.id = 'printArea';
   for (const p of App.doc.pages) { const im = document.createElement('img'); im.src = renderPageCanvas(p, 2000).toDataURL('image/jpeg', 0.92); area.appendChild(im); }
   document.body.appendChild(area);
@@ -3557,6 +3559,7 @@ async function printBoard() {
 async function emailBoard() {
   closePops(); toast('Making the PDF…');
   const blob = await buildPDF(), name = suggestedName() + '.pdf', file = new File([blob], name, { type: 'application/pdf' });
+  if (NATIVE) return nativeShareBlob(blob, name, 'Send the board');
   try {
     if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: suggestedName(), text: 'Board from Likhi' }); return; }
   } catch (e) { if (e && e.name === 'AbortError') return; }
@@ -3644,7 +3647,7 @@ function buildOverlayBar() {
 if (desk && desk.onOpenFile) desk.onOpenFile((name, text, path) => openBoardFile({ name }, null, text, path));
 
 // installable web app + offline support when served from a website
-if (/^https?:$/.test(location.protocol) && !desk && !App.overlay) {
+if (/^https?:$/.test(location.protocol) && !desk && !App.overlay && !window.Capacitor) {
   const l = document.createElement('link'); l.rel = 'manifest'; l.href = 'manifest.webmanifest'; document.head.appendChild(l);
   const ic = document.createElement('link'); ic.rel = 'apple-touch-icon'; ic.href = 'icons/icon-192.png'; document.head.appendChild(ic);
   if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
@@ -4252,7 +4255,7 @@ async function exportAs(kind) {
     else if (kind === 'pptx') { toast('Making the PowerPoint…'); downloadBlob(await buildPptx(), n + '.pptx'); }
     else if (kind === 'txt') downloadBlob(buildNotes(), n + ' - notes.txt');
     else if (kind === 'likhi') downloadBlob(new Blob([JSON.stringify(boardData())], { type: 'application/json' }), n + '.likhi');
-    toast('Saved to your Downloads folder');
+    if (!NATIVE) toast('Saved to your Downloads folder');
   } catch (e) { toast('Export failed — ' + (e.message || 'please try again')); }
 }
 
@@ -4314,7 +4317,8 @@ function renderSettings() {
     <div><b>PDF reading</b><span>PDF.js by Mozilla — Apache License 2.0</span></div>
     <div><b>Icons</b><span>Lucide — ISC License</span></div>
     <div><b>Windows app</b><span>Electron — MIT License</span></div></div>
-    <h3>What’s new in 1.2</h3><ul class="news"><li>Save, Save as and Open real .likhi files — and auto-save into the file</li><li>Asks Save / Save as / Don’t save when you close a board or the app</li><li>File, Import and Export always at the top of the board</li><li>Stylus and drawing tablet support: pressure, eraser end, side button</li><li>Works on Android phones, tablets and small screens</li></ul>
+    <h3>What’s new in 1.2.1</h3><ul class="news"><li>Android app: Save and Export open the phone’s share menu (Files, Drive, WhatsApp, Gmail, Print)</li></ul>
+    <h3>New in 1.2</h3><ul class="news"><li>Save, Save as and Open real .likhi files — and auto-save into the file</li><li>Asks Save / Save as / Don’t save when you close a board or the app</li><li>File, Import and Export always at the top of the board</li><li>Stylus and drawing tablet support: pressure, eraser end, side button</li><li>Works on Android phones, tablets and small screens</li></ul>
     <h3>New in 1.1</h3><ul class="news"><li>Dashboard with all your boards and new board types</li><li>Import Word, PowerPoint and notes; export to Word, PowerPoint, PDF, picture and notes</li><li>Settings, with backup of your preferences and developer tools</li><li>Optional pen writing sounds</li><li>Rougher, more real chalk</li></ul>
     <h3>Keyboard</h3><p class="hint" style="font-size:13px;line-height:1.8">Ctrl+Z undo · Ctrl+Y redo · Ctrl+S save · Ctrl+O dashboard · Ctrl+P print · Ctrl+C / X / V copy, cut, paste · Ctrl+D clone · Delete · Arrows nudge · Esc close</p>
     <p class="hint" style="text-align:center;margin-top:16px">Free for every teacher and student.</p>`;
@@ -4366,7 +4370,7 @@ async function importPrefs() {
 async function devInfo() {
   let storage = 'unknown'; try { const e = await navigator.storage.estimate(); storage = (e.usage / 1048576).toFixed(1) + ' MB used of ' + Math.round(e.quota / 1048576) + ' MB'; } catch (e) {}
   const boards = await boardIndex(), objs = App.doc.pages.reduce((s, p) => s + p.objects.length, 0);
-  return [['Version', `${APP_VERSION} (${APP_BUILD})`], ['Running as', window.likhiDesktop ? 'Windows app' : /^https?:/.test(location.protocol) ? 'Website' : 'Local file'],
+  return [['Version', `${APP_VERSION} (${APP_BUILD})`], ['Running as', window.likhiDesktop ? 'Windows app' : NATIVE ? 'Android app' : /^https?:/.test(location.protocol) ? 'Website' : 'Local file'],
     ['Browser', navigator.userAgent.replace(/^Mozilla\/5\.0 /, '')], ['Screen', `${screen.width}×${screen.height} · window ${VW}×${VH} · pixel ratio ${DPR}`],
     ['Touch points', navigator.maxTouchPoints || 0], ['Inputs used', [...App.ptrTypes].join(', ') || '—'], ['Canvas', `${cvScene.width}×${cvScene.height}`],
     ['This board', `${App.doc.pages.length} pages · ${objs} objects · ${App.history.length} undo steps`], ['Saved boards', boards.length], ['Storage', storage],
@@ -4511,7 +4515,7 @@ async function saveToFile(as) {
       Store.put('handle:' + App.board.id, h).catch(() => {});
     } else {
       // no file access in this browser: download a copy
-      const nm = await promptBox(as ? 'Save as' : 'Save', 'File name — it goes to your Downloads folder', name.replace(/\.likhi$/i, ''), 'Save');
+      const nm = await promptBox(as ? 'Save as' : 'Save', NATIVE ? 'File name — then choose where to keep it (Files, Drive…)' : 'File name — it goes to your Downloads folder', name.replace(/\.likhi$/i, ''), 'Save');
       if (!nm) return false;
       downloadBlob(new Blob([text], { type: 'application/json' }), nm.replace(/\.likhi$/i, '') + '.likhi'); App.board.file = nm.replace(/\.likhi$/i, '') + '.likhi';
     }
@@ -4658,6 +4662,25 @@ document.addEventListener('keydown', e => {
 on('pagechange', () => {
   if (App.board.id && VW < 600 && VH > VW && !LS.get('tipTurn', false) && !App.overlay) { LS.set('tipTurn', true); setTimeout(() => toast('Tip: turn your phone sideways for a bigger board'), 600); }
 });
+
+// ---- 08m-native.js ----
+// ===== Android app (Capacitor): files go through the phone's share menu instead of "downloads" =====
+const NATIVE = !!(window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform());
+let NFS = null, NSHARE = null;
+if (NATIVE) { try { NFS = window.Capacitor.registerPlugin('Filesystem'); NSHARE = window.Capacitor.registerPlugin('Share'); } catch (e) {} document.body.classList.add('native'); }
+const blobToBase64 = blob => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = rej; r.readAsDataURL(blob); });
+// save a file into the app's storage, then open the share menu (Save to Files / Drive, WhatsApp, Gmail, Print…)
+async function nativeShareBlob(blob, name, title) {
+  try {
+    const data = await blobToBase64(blob);
+    const r = await NFS.writeFile({ path: name.replace(/[^\w.\- ]+/g, '-'), data, directory: 'CACHE' });
+    await NSHARE.share({ title: title || name, url: r.uri, dialogTitle: title || ('Save or send ' + name) });
+    return true;
+  } catch (e) {
+    if (e && /cancel/i.test(e.message || '')) return false;
+    toast('Could not share the file' + (e && e.message ? ' — ' + e.message : '')); return false;
+  }
+}
 
 // ---- 09-main.js ----
 // ===== Startup =====

@@ -1,4 +1,4 @@
-# Likhi v1.2 — The board, reimagined.
+# Likhi v1.2.1 — The board, reimagined.
 
 Likhi is a free interactive whiteboard for teachers. It works on Windows smart boards, laptops and Macs, in any modern Chrome or Edge, and fully offline.
 
@@ -9,7 +9,9 @@ Likhi is a free interactive whiteboard for teachers. It works on Windows smart b
 | `index.html` | **The whole app in one file.** Double-click it to use Likhi offline, or put it on a website. |
 | `manifest.webmanifest`, `sw.js`, `icons/` | Let people **install** Likhi from the website and use it offline. |
 | `desktop/` | The **Windows app** project (Electron). GitHub builds the `.exe` from it. |
-| `.github/workflows/build-windows.yml` | The recipe GitHub uses to build `Likhi-Setup-1.2.0.exe` and `Likhi-Portable-1.2.0.exe`. |
+| `android-app/` | The **Android app** project (Capacitor). GitHub builds the `.apk` from it. |
+| `.github/workflows/build-android.yml` | The recipe GitHub uses to build `Likhi-1.2.1.apk`. |
+| `.github/workflows/build-windows.yml` | The recipe GitHub uses to build `Likhi-Setup-1.2.1.exe` and `Likhi-Portable-1.2.1.exe`. |
 
 ## 1. Use it right now (no internet needed)
 Double-click `index.html`. It opens in your browser and saves your board automatically.
@@ -32,12 +34,23 @@ GitHub builds it for free on its own Windows computers — you don't need a Wind
 1. Upload this folder to a GitHub repository (as above).
 2. Open the **Actions** tab → **Build Windows app** → **Run workflow**.
 3. Wait about 5 minutes, open the finished run, and download **Likhi-Windows** at the bottom. Inside:
-   - `Likhi-Setup-1.2.0.exe` — installer (Start menu + desktop shortcut, opens `.likhi` files)
-   - `Likhi-Portable-1.2.0.exe` — runs without installing (good for a USB stick)
+   - `Likhi-Setup-1.2.1.exe` — installer (Start menu + desktop shortcut, opens `.likhi` files)
+   - `Likhi-Portable-1.2.1.exe` — runs without installing (good for a USB stick)
 
-To publish a proper download page, push a tag: `git tag v1.2.0 && git push --tags`. The `.exe` files are then attached to a **Release**.
+To publish a proper download page, push a tag: `git tag v1.2.1 && git push --tags`. The `.exe` files are then attached to a **Release**.
 
 **First run on Windows:** the app isn't code-signed (certificates cost money), so Windows may show **"Windows protected your PC"**. Click **More info → Run anyway**. This is normal for free apps.
+
+## 4. Get the Android app (.apk)
+GitHub builds this too — no Android Studio needed.
+
+1. Add your signing key as 4 GitHub secrets (one time): **Settings → Secrets and variables → Actions → New repository secret**. The names and values are in *READ ME - Likhi signing key.txt* (sent separately — never put the key files in this repository).
+2. **Actions → Build Android app → Run workflow**. Wait about 6–8 minutes.
+3. Download **Likhi-Android** from the finished run. Inside is `Likhi-1.2.1.apk`.
+4. Send the APK by WhatsApp or Drive. On the phone, tap it; Android asks once to allow installing from that app.
+
+Without the secrets, the build still works but makes `Likhi-1.2.1-test.apk` — fine for trying, but updates won't install over it later.
+In the Android app, Save and Export open the phone's share menu, so you can keep files in Files or Drive, or send them by WhatsApp or Gmail.
 
 ### Windows-only extra: draw on the screen
 In the Windows app, **Insert → Draw on the screen** (or **Ctrl+Shift+D** from anywhere) puts a transparent layer over everything — PowerPoint, YouTube, any app.
