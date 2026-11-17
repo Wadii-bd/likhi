@@ -1,9 +1,9 @@
 name: Build Windows app
 
 on:
-  workflow_dispatch:        # run it by hand from the Actions tab
+  workflow_dispatch:
   push:
-    tags: ['v*']            # or push a tag like v1.0.0 to make a Release
+    tags: ['v*']
 
 permissions:
   contents: write
