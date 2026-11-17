@@ -1,7 +1,11 @@
 {
-  "appId": "app.likhi.board",
+  "appId": "com.wadi.likhi.board",
   "appName": "Likhi",
   "webDir": "www",
-  "server": { "androidScheme": "https" },
-  "android": { "backgroundColor": "#1F4D3A" }
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#1F4D3A"
+  }
 }
