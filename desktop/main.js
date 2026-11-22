@@ -108,6 +108,96 @@ ipcMain.handle('file:remove', async (e, p) => {
   if (!inAutoDir(p)) return false;
   try { await fs.promises.unlink(p); return true; } catch (err) { return false; }
 });
+// 2.0: automatic backup to a folder or USB drive the teacher picks. Only that folder is ever written to.
+const backupCfg = () => path.join(app.getPath('userData'), 'backup.json');
+let backupDir = null; try { backupDir = JSON.parse(fs.readFileSync(backupCfg(), 'utf8')).dir || null; } catch (err) {}
+ipcMain.handle('backup:pick', async e => {
+  const r = await dialog.showOpenDialog(BrowserWindow.fromWebContents(e.sender), { title: 'Choose a folder or USB drive for backups', properties: ['openDirectory', 'createDirectory'] });
+  if (r.canceled || !r.filePaths[0]) return null;
+  backupDir = r.filePaths[0]; try { fs.writeFileSync(backupCfg(), JSON.stringify({ dir: backupDir })); } catch (err) {}
+  return backupDir;
+});
+ipcMain.handle('backup:dir', () => backupDir);
+ipcMain.handle('backup:clear', () => { backupDir = null; try { fs.unlinkSync(backupCfg()); } catch (err) {} return true; });
+ipcMain.handle('backup:write', async (e, { day, files, keep }) => {
+  if (!backupDir) return { ok: false, why: 'no-folder' };
+  try { await fs.promises.access(backupDir); } catch (err) { return { ok: false, why: 'missing' }; }
+  const root = path.join(backupDir, 'Likhi backups'), dayDir = path.join(root, String(day).replace(/[^0-9-]/g, '').slice(0, 10) || 'backup');
+  try {
+    await fs.promises.mkdir(dayDir, { recursive: true });
+    const used = new Set();
+    for (const f of files) {
+      let base = String(f.name || 'Board').replace(/[\\/:*?"<>|]/g, '-').trim().slice(0, 100) || 'Board', n = base, i = 2;
+      while (used.has(n.toLowerCase())) n = `${base} (${i++})`; used.add(n.toLowerCase());
+      await fs.promises.writeFile(path.join(dayDir, n + '.likhi'), f.text, 'utf8');
+    }
+    // keep only the newest few days
+    const days = (await fs.promises.readdir(root, { withFileTypes: true })).filter(d => d.isDirectory() && /^\d{4}-\d{2}-\d{2}$/.test(d.name)).map(d => d.name).sort();
+    for (const d of days.slice(0, Math.max(0, days.length - (keep || 7)))) await fs.promises.rm(path.join(root, d), { recursive: true, force: true });
+    return { ok: true, dir: dayDir, count: files.length };
+  } catch (err) { return { ok: false, why: 'write', msg: String(err.message || err) }; }
+});
+// 2.0 (experimental): "Photo from phone" — while the QR window is open, a tiny receiver runs on this
+// computer. A phone on the same Wi-Fi scans the code, picks photos, and they appear on the board.
+// It needs the secret code from the QR, accepts only pictures, and stops when the window closes (or after 30 min).
+const http = require('http'), os = require('os'), crypto = require('crypto');
+let phone = null;   // { server, token, timer, wc }
+function lanAddresses() {
+  const out = [];
+  for (const [name, list] of Object.entries(os.networkInterfaces())) for (const a of list || []) {
+    if (a.family !== 'IPv4' && a.family !== 4) continue; if (a.internal) continue;
+    if (/^169\.254\./.test(a.address)) continue;
+    const priv = /^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(a.address), virt = /vmware|virtualbox|vethernet|hyper-v|loopback|docker|wsl/i.test(name);
+    out.push({ ip: a.address, score: (priv ? 2 : 0) + (virt ? -3 : 0) + (/wi-?fi|wlan|wireless/i.test(name) ? 1 : 0) });
+  }
+  return out.sort((a, b) => b.score - a.score).map(a => a.ip);
+}
+function stopPhone() { if (!phone) return; try { phone.server.close(); } catch (e) {} clearTimeout(phone.timer); phone = null; }
+const PHONE_PAGE = token => `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Send photos to Likhi</title>
+<style>body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#1F4D3A;color:#F7F3E8;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;text-align:center}
+h1{font-size:26px;margin:0 0 6px}p{opacity:.85;margin:0 0 22px;font-size:15px}.b{display:block;width:100%;max-width:340px;box-sizing:border-box;margin:8px auto;padding:18px;border-radius:16px;border:0;font-size:18px;font-weight:700;background:#F2C94C;color:#1F2A24}
+.b.s{background:#F7F3E8}#st{margin-top:18px;min-height:24px;font-size:15px}input{display:none}small{opacity:.6;margin-top:26px;font-size:12px}</style></head><body>
+<h1>Send photos to the board</h1><p>Your photos appear on the Likhi board straight away.</p>
+<label class="b">Take a photo<input id="cam" type="file" accept="image/*" capture="environment"></label>
+<label class="b s">Choose photos<input id="pick" type="file" accept="image/*" multiple></label>
+<div id="st"></div><small>Likhi · experimental</small>
+<script>
+const T=${JSON.stringify(token)},st=document.getElementById('st');
+async function shrink(f){try{const bm=await createImageBitmap(f);const k=Math.min(1,2200/Math.max(bm.width,bm.height));const c=document.createElement('canvas');c.width=Math.round(bm.width*k);c.height=Math.round(bm.height*k);c.getContext('2d').drawImage(bm,0,0,c.width,c.height);return await new Promise(r=>c.toBlob(r,'image/jpeg',0.86));}catch(e){return f;}}
+async function send(files){let ok=0;for(const f of files){st.textContent='Sending '+(ok+1)+' of '+files.length+'…';try{const b=await shrink(f);const r=await fetch('/upload?t='+T,{method:'POST',headers:{'Content-Type':b.type||'image/jpeg'},body:b});if(r.ok)ok++;else{st.textContent=r.status===403?'This code has expired — scan the new QR code on the board.':'The board could not take that photo.';return;}}catch(e){st.textContent='Lost connection to the board.';return;}}
+st.textContent=ok===1?'✓ Sent! Send another?':'✓ '+ok+' photos sent!';}
+for(const id of ['cam','pick'])document.getElementById(id).onchange=e=>{const f=[...e.target.files];e.target.value='';if(f.length)send(f);};
+</script></body></html>`;
+ipcMain.handle('phone:start', async e => {
+  stopPhone();
+  const token = crypto.randomBytes(12).toString('hex'), wc = e.sender;
+  const server = http.createServer((req, res) => {
+    const u = new URL(req.url, 'http://x'), good = u.searchParams.get('t') === token;
+    if (!phone || !good) { res.writeHead(403, { 'Content-Type': 'text/plain' }); return res.end('This QR code has expired. Scan the new one on the board.'); }
+    phone.timer.refresh && phone.timer.refresh();
+    if (req.method === 'GET' && u.pathname === '/') { res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' }); return res.end(PHONE_PAGE(token)); }
+    if (req.method === 'POST' && u.pathname === '/upload') {
+      const type = String(req.headers['content-type'] || '').split(';')[0].trim().toLowerCase();
+      if (!/^image\/(jpeg|png|webp|gif|heic|heif|bmp)$/.test(type)) { res.writeHead(415); return res.end('Pictures only'); }
+      const chunks = []; let size = 0, dead = false;
+      req.on('data', c => { size += c.length; if (size > 25 * 1024 * 1024) { dead = true; res.writeHead(413); res.end('Too big'); req.destroy(); } else chunks.push(c); });
+      req.on('end', () => {
+        if (dead) return;
+        try { if (!wc.isDestroyed()) wc.send('phone:photo', `data:${type};base64,` + Buffer.concat(chunks).toString('base64')); } catch (err) {}
+        res.writeHead(200, { 'Content-Type': 'text/plain' }); res.end('ok');
+      });
+      return;
+    }
+    res.writeHead(404); res.end();
+  });
+  await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '0.0.0.0', resolve); });
+  const port = server.address().port, ips = lanAddresses();
+  phone = { server, token, wc, timer: setTimeout(stopPhone, 30 * 60 * 1000) };
+  return { urls: ips.map(ip => `http://${ip}:${port}/?t=${token}`), port };
+});
+ipcMain.handle('phone:stop', () => { stopPhone(); return true; });
+app.on('before-quit', stopPhone);
+
 ipcMain.on('file:show', (e, p) => { if (typeof p === 'string' && p) shell.showItemInFolder(p); });
 ipcMain.handle('file:open', async e => {
   const r = await dialog.showOpenDialog(BrowserWindow.fromWebContents(e.sender), { title: 'Open board', defaultPath: app.getPath('documents'), filters: likhiFilter, properties: ['openFile'] });

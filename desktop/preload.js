@@ -9,7 +9,16 @@ contextBridge.exposeInMainWorld('likhiDesktop', {
   autoPath: name => ipcRenderer.invoke('file:autoPath', name),     // new file in Documents\Likhi -> { path, name }
   renameFile: (path, name) => ipcRenderer.invoke('file:rename', path, name),
   removeFile: path => ipcRenderer.invoke('file:remove', path),       // only files inside Documents\Likhi
-  showFile: path => ipcRenderer.send('file:show', path),                  // -> { path, name, text } | null
+  showFile: path => ipcRenderer.send('file:show', path),
+  // photo from phone (2.0, experimental)
+  phoneStart: () => ipcRenderer.invoke('phone:start'),             // -> { urls:[...], port }
+  phoneStop: () => ipcRenderer.invoke('phone:stop'),
+  onPhonePhoto: cb => ipcRenderer.on('phone:photo', (e, dataURL) => cb(dataURL)),
+  // automatic backup (2.0)
+  backupPick: () => ipcRenderer.invoke('backup:pick'),
+  backupDir: () => ipcRenderer.invoke('backup:dir'),
+  backupClear: () => ipcRenderer.invoke('backup:clear'),
+  backupWrite: opts => ipcRenderer.invoke('backup:write', opts),     // { day:'2026-11-22', files:[{name,text}], keep }                  // -> { path, name, text } | null
   onOpenFile: cb => ipcRenderer.on('open-file', (e, name, text, path) => cb(name, text, path)),
   // closing the window
   onCloseRequest: cb => ipcRenderer.on('app:close-request', () => cb()),
