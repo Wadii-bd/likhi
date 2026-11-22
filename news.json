@@ -3,9 +3,13 @@
   "latestName": "v2026.11 (2.0)",
   "title": "Likhi v2026.11 (2.0) is the latest version now! Major Update on 22 Nov 26",
   "message": "New: hand eraser for smart boards, stamps, arrows and patterned fills, board folders, search, automatic backup, photo from phone and a better colour picker.",
-  "windows": "wa.me/+8801345245819",
-  "android": "wa.me/+8801345245819",
-  "announcement": test-1,
+  "windows": "https://wa.me/8801345245819",
+  "android": "https://wa.me/8801345245819",
+  "announcement": {
+    "id": "test-1",
+    "title": "Test message",
+    "message": "If you can see this, pop-ups work!"
+  },
   "feedbackEmail": "wadi.nayeemabrar@gmail.com",
   "feedbackForm": ""
 }
