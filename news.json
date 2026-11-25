@@ -1,11 +1,11 @@
 {
-  "latest": "2.0",
-  "latestName": "v2026.11 (2.0)",
-  "title": "Likhi v2026.11 (2.0) is here!",
-  "message": "New: hand eraser for smart boards, stamps, arrows and patterned fills, board folders, search, automatic backup, photo from phone and a better colour picker.",
-  "windows": "https://github.com/Wadii-bd/likhi/releases/latest",
-  "android": "https://github.com/Wadii-bd/likhi/releases/latest",
+  "latest": "2.0.1",
+  "latestName": "v2026.11 (2.0.1)",
+  "title": "Likhi v2026.11 (2.0.1) is here!",
+  "message": "Now with free access login, and news shows on the dashboard straight away. Please download the new version.",
+  "windows": "https://wa.me/8801345245819",
+  "android": "https://wa.me/8801345245819",
   "announcement": null,
-  "feedbackEmail": "",
+  "feedbackEmail": "wadi.nayeemabrar@gmail.com",
   "feedbackForm": ""
 }

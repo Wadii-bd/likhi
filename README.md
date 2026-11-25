@@ -1,4 +1,4 @@
-# Likhi v2026.11 (2.0) — Likhi, Shikhi, Shekhai
+# Likhi v2026.11 (2.0.1) — Likhi, Shikhi, Shekhai
 
 Likhi is a free interactive whiteboard for teachers. It works on Windows smart boards, laptops and Macs, in any modern Chrome or Edge, and fully offline.
 
@@ -10,8 +10,8 @@ Likhi is a free interactive whiteboard for teachers. It works on Windows smart b
 | `manifest.webmanifest`, `sw.js`, `icons/` | Let people **install** Likhi from the website and use it offline. |
 | `desktop/` | The **Windows app** project (Electron). GitHub builds the `.exe` from it. |
 | `android-app/` | The **Android app** project (Capacitor). GitHub builds the `.apk` from it. |
-| `.github/workflows/build-android.yml` | The recipe GitHub uses to build `Likhi-2.0.apk`. |
-| `.github/workflows/build-windows.yml` | The recipe GitHub uses to build `Likhi-Setup-2.0.0.exe` and `Likhi-Portable-2.0.0.exe`. |
+| `.github/workflows/build-android.yml` | The recipe GitHub uses to build `Likhi-2.0.1.apk`. |
+| `.github/workflows/build-windows.yml` | The recipe GitHub uses to build `Likhi-Setup-2.0.1.exe` and `Likhi-Portable-2.0.1.exe`. |
 
 ## 1. Use it right now (no internet needed)
 Double-click `index.html`. It opens in your browser and saves your board automatically.
@@ -34,10 +34,10 @@ GitHub builds it for free on its own Windows computers — you don't need a Wind
 1. Upload this folder to a GitHub repository (as above).
 2. Open the **Actions** tab → **Build Windows app** → **Run workflow**.
 3. Wait about 5 minutes, open the finished run, and download **Likhi-Windows** at the bottom. Inside:
-   - `Likhi-Setup-2.0.0.exe` — installer (Start menu + desktop shortcut, opens `.likhi` files)
-   - `Likhi-Portable-2.0.0.exe` — runs without installing (good for a USB stick)
+   - `Likhi-Setup-2.0.1.exe` — installer (Start menu + desktop shortcut, opens `.likhi` files)
+   - `Likhi-Portable-2.0.1.exe` — runs without installing (good for a USB stick)
 
-To publish a proper download page, push a tag: `git tag v2.0 && git push --tags`. The `.exe` files are then attached to a **Release**.
+To publish a proper download page, push a tag: `git tag v2.0.1 && git push --tags`. The `.exe` files are then attached to a **Release**.
 
 **First run on Windows:** the app isn't code-signed (certificates cost money), so Windows may show **"Windows protected your PC"**. Click **More info → Run anyway**. This is normal for free apps.
 
@@ -46,10 +46,10 @@ GitHub builds this too — no Android Studio needed.
 
 1. Add your signing key as 4 GitHub secrets (one time): **Settings → Secrets and variables → Actions → New repository secret**. The names and values are in *READ ME - Likhi signing key.txt* (sent separately — never put the key files in this repository).
 2. **Actions → Build Android app → Run workflow**. Wait about 6–8 minutes.
-3. Download **Likhi-Android** from the finished run. Inside is `Likhi-2.0.apk`.
+3. Download **Likhi-Android** from the finished run. Inside is `Likhi-2.0.1.apk`.
 4. Send the APK by WhatsApp or Drive. On the phone, tap it; Android asks once to allow installing from that app.
 
-Without the secrets, the build still works but makes `Likhi-2.0-test.apk` — fine for trying, but updates won't install over it later.
+Without the secrets, the build still works but makes `Likhi-2.0.1-test.apk` — fine for trying, but updates won't install over it later.
 In the Android app, Save and Export open the phone's share menu, so you can keep files in Files or Drive, or send them by WhatsApp or Gmail.
 
 ### Windows-only extra: draw on the screen
@@ -99,3 +99,9 @@ Likhi reads `news.json` from this repository whenever it opens and is online.
   Each new `id` shows once per person. Use `null` for no announcement.
 - **Feedback:** put an email in `"feedbackEmail"` or a Google Form link in `"feedbackForm"`, and the **Send feedback** page in Settings uses it. GitHub issues always work too.
 Edit the file on GitHub and press **Commit** — no rebuild needed.
+
+## Free access login (2.0.1)
+Likhi asks for a phone number and access code, checked against your private Google Sheet by the script in `access/likhi-access.gs`
+(set up as a Google Apps Script web app). The checker link is built into the app. To move it later without a new version,
+add `"accessUrl": "https://script.google.com/macros/s/…/exec"` to `news.json`.
+Sheet tab **Access**, columns: Phone | Access code | Name | Institution | Active | Max devices | Devices | Last login | Notes.

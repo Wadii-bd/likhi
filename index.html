@@ -448,6 +448,33 @@ body.dark .about h2{color:var(--chalk)}
 .dmain .dbtn{color:#1F4D3A;background:#fff;border-color:#D8D3C4}
 .dmain .dbtn:hover{background:#F1EEE4}
 body.dark .dmain .dbtn{color:#F7F3E8;background:rgba(247,243,232,.06);border-color:rgba(247,243,232,.22)}
+
+/* 2.0.1 login */
+#gate{position:fixed;inset:0;z-index:90;background:#1F4D3A;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:24px 14px;box-sizing:border-box;transition:opacity .25s}
+#gate.out{opacity:0}
+#gate .gbox{background:#FBF8EF;color:#1E2420;border-radius:22px;padding:26px 26px 18px;width:520px;max-width:100%;box-shadow:0 20px 60px rgba(0,0,0,.35);margin:auto 0;box-sizing:border-box}
+#gate .glogo{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+#gate .glogo b{display:block;font-size:24px;color:#1F4D3A;line-height:1}
+#gate .glogo small{color:#5B635E;font-size:13px}
+#gate h2{margin:0 0 4px;font-size:22px;color:#1F4D3A}
+#gate .gsub{margin:0 0 14px;color:#3A423D;font-size:15px}
+#gate .gcontact{display:flex;gap:16px;align-items:center;background:#fff;border:1px solid #E4DFD0;border-radius:16px;padding:12px;margin-bottom:14px}
+#gate .gqr{display:flex;flex-direction:column;align-items:center;gap:4px;flex:none}
+#gate .gqr svg{width:150px;height:150px}
+#gate .gqr small{font-size:11.5px;color:#5B635E;max-width:150px;text-align:center}
+#gate .gbtns{display:flex;flex-direction:column;gap:8px;flex:1;min-width:0}
+#gate .gbtns a{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:12px;text-decoration:none;font-weight:600;font-size:14.5px;word-break:break-all}
+#gate .gwa{background:#25A244;color:#fff}
+#gate .gmail{background:#F1EEE4;color:#1F4D3A}
+#gate .gwhy{background:rgba(242,201,76,.25);border-radius:10px;padding:9px 12px;margin:0 0 12px;font-size:14px}
+#gate .gform{display:flex;flex-direction:column;gap:10px}
+#gate label{display:flex;flex-direction:column;gap:5px;font-weight:600;font-size:14px;color:#1F4D3A}
+#gate .tinput{background:#fff;color:#1E2420;border-color:#D8D3C4;height:46px;font-size:17px}
+#gate .gerr{color:#C62828;min-height:20px;margin:0;font-size:14px}
+#gate .gok{height:50px;border:0;border-radius:13px;background:#1F4D3A;color:#fff;font-size:17px;font-weight:700;cursor:pointer}
+#gate .gok:disabled{opacity:.6}
+#gate .gfoot{text-align:center;color:#8a8f8c;font-size:12px;margin:14px 0 0}
+@media (max-width:560px){ #gate .gcontact{flex-direction:column} #gate .gqr{display:none} #gate .gbox{padding:20px 16px 14px} }
 </style>
 </head>
 <body class="dock-bottom tool-pen">
@@ -527,7 +554,7 @@ function luminance(hex) { const [r, g, b] = hexToRgb(hex); return (0.2126 * r + 
 const isDark = hex => luminance(hex) < 0.45;
 
 // ---------- constants ----------
-const APP_VERSION = '2.0', APP_VERSION_NAME = 'v2026.11 (2.0)', APP_BUILD = '2026-11-22';
+const APP_VERSION = '2.0.1', APP_VERSION_NAME = 'v2026.11 (2.0.1)', APP_BUILD = '2026-11-25';
 const APP_CREDITS = { by: 'Nayeem Abrar Wadi', tagline: 'Likhi, Shikhi, Shekhai',
   bio: 'Likhi was imagined and built by <b>Nayeem Abrar Wadi</b>, a student at Notre Dame College, Dhaka, so that every teacher can have a smooth, free digital board, with no subscriptions and no ads.',
   help: 'Built with help from Claude Opus 5.5' };
@@ -4613,7 +4640,8 @@ function renderSettings() {
     <div class="set-row" style="margin-top:10px"><div class="t">New boards start as<small>Used by “New board” in the menu</small></div></div>
     <div class="grid" style="grid-template-columns:repeat(5,1fr)">${BOARD_KINDS.filter(k => !k.infinite).map(k => `<button class="bgsw ${S.newBg.color === k.bg.color && S.newBg.pattern === k.bg.pattern ? 'on' : ''}" data-newbg="${k.k}" style="background:${k.bg.color};color:${isDark(k.bg.color) ? '#fff' : '#333'}">${k.name.split(' ')[0]}</button>`).join('')}</div>
     ${sw('fileAutosave', 'Auto-save', 'Every board saves itself as a .likhi file from the start, and every change goes into it (Windows app: Documents → Likhi)')}
-    <div class="set-row" style="margin-top:4px"><div class="t">Full screen<small>Great on smart boards</small></div><button class="wide" style="width:auto;padding:0 16px" id="sFull">${icon('Expand', 18)} Toggle</button></div>`;
+    <div class="set-row" style="margin-top:4px"><div class="t">Full screen<small>Great on smart boards</small></div><button class="wide" style="width:auto;padding:0 16px" id="sFull">${icon('Expand', 18)} Toggle</button></div>
+    ${typeof accountSection === 'function' ? accountSection() : ''}`;
   else if (setSection === 'writing') body = `<h3>Writing</h3>
     <div class="set-row"><div class="t">Handwriting smoothing<small>Chalk always stays rough on purpose</small></div></div>${seg('smoothing', [[0, 'Off'], [1, 'Low'], [2, 'High']])}
     ${sw('pressure', 'Pen pressure', 'Pen, highlighter, ink and bamboo brush get thicker when you press harder (stylus or drawing tablet)')}${sw('palm', 'Palm rejection', 'Ignores your hand resting on the board')}${sw('penOnly', 'Pen only', 'Fingers can’t draw (stylus boards)')}${sw('recog', 'Smart shapes', 'Rough circles, boxes and lines become neat ones (Pen and Chalk)')}
@@ -4663,7 +4691,8 @@ function renderSettings() {
     <div><b>PDF reading</b><span>PDF.js by Mozilla — Apache License 2.0</span></div>
     <div><b>Icons</b><span>Lucide — ISC License</span></div>
     <div><b>Windows app</b><span>Electron — MIT License</span></div></div>
-    <h3>What’s new in v2026.11 (2.0)</h3><ul class="news"><li>Hand eraser: rub the board with the back of your hand to erase (Settings → Writing)</li><li>Marking stamps: tick, cross, star, “Good!” and “Check again”</li><li>Dashed arrows, double arrows and curved arrows</li><li>Patterned fills for shapes: stripes, cross-hatch, dots and grid</li><li>Make selected writing thicker or thinner in one go</li><li>Board folders, pinned boards, and search that finds words written on boards</li><li>Automatic daily backup to a folder or USB drive (Windows app)</li><li>Photo from phone — scan a QR code and send photos to the board (Windows app, experimental)</li><li>Update and news pop-ups</li><li>A new colour picker that always fits on the screen</li><li>Toolbar size slider and Large room mode, Settings button on every board, Send feedback</li></ul>
+    <h3>What’s new in v2026.11 (2.0.1)</h3><ul class="news"><li>Free access login: phone number and access code (ask us on WhatsApp or email — it’s free)</li><li>Log out in Settings → General</li><li>News and update messages now show on the dashboard straight away</li></ul>
+    <h3>New in v2026.11 (2.0)</h3><ul class="news"><li>Hand eraser: rub the board with the back of your hand to erase (Settings → Writing)</li><li>Marking stamps: tick, cross, star, “Good!” and “Check again”</li><li>Dashed arrows, double arrows and curved arrows</li><li>Patterned fills for shapes: stripes, cross-hatch, dots and grid</li><li>Make selected writing thicker or thinner in one go</li><li>Board folders, pinned boards, and search that finds words written on boards</li><li>Automatic daily backup to a folder or USB drive (Windows app)</li><li>Photo from phone — scan a QR code and send photos to the board (Windows app, experimental)</li><li>Update and news pop-ups</li><li>A new colour picker that always fits on the screen</li><li>Toolbar size slider and Large room mode, Settings button on every board, Send feedback</li></ul>
     <h3>New in 1.3</h3><ul class="news"><li>Boards save themselves as a .likhi file from the start — no need to save first</li><li>Trash: deleted boards can be restored for 30 days</li><li>New Blackboard board colour, dusty and real</li><li>Scratchier, more real chalk</li><li>Pen sounds that follow your writing</li><li>New pages go right after the page you are on</li><li>The hide-toolbar button always stays in the middle</li></ul>
     <h3>New in 1.2.1</h3><ul class="news"><li>Android app: Save and Export open the phone’s share menu (Files, Drive, WhatsApp, Gmail, Print)</li></ul>
     <h3>New in 1.2</h3><ul class="news"><li>Save, Save as and Open real .likhi files — and auto-save into the file</li><li>Asks Save / Save as / Don’t save when you close a board or the app</li><li>File, Import and Export always at the top of the board</li><li>Stylus and drawing tablet support: pressure, eraser end, side button</li><li>Works on Android phones, tablets and small screens</li></ul>
@@ -4694,6 +4723,7 @@ function renderSettings() {
   if (q('#sImp')) q('#sImp').onclick = importPrefs;
   if (setSection === 'dev') devPanel(el);
   if (setSection === 'feedback') feedbackPanel(el);
+  if (q('#sLogout')) q('#sLogout').onclick = logOut;
   if (q('#sUpd')) q('#sUpd').onclick = async () => { const b = q('#sUpd'); b.disabled = true; b.textContent = 'Checking…'; const n = await fetchNews();
     if (!n) { toast('Could not check — are you online?'); renderSettings(); return; }
     if (n.latest && cmpVer(n.latest, APP_VERSION) > 0) { closeSettings(); checkNews(true); } else { toast('You have the newest Likhi'); renderSettings(); } };
@@ -5652,7 +5682,129 @@ async function checkNews(force) {
     else LS.set('newsSeen', [...seen, key].slice(-50));
   }
 }
-setTimeout(() => { if (!App.overlay) checkNews(false); }, 4000);
+
+// ---- 08u-access.js ----
+// ===== 2.0.1: Free access login — phone number + access code, checked against the developer's private Google Sheet =====
+// Likhi is free for everyone; people ask the developer for a code. The checker (Google Apps Script) only answers yes/no.
+// Asked again: after 30 days (only when Likhi is opened, never in the middle of a class), after 7 days without using
+// Likhi, or after Log out. Logging in again on the same device never uses another device slot.
+const ACCESS = {
+  url: 'https://script.google.com/macros/s/AKfycbyD6zGsf2UKo5-2Hy--Lrdfr7VpikyxogvuLoAP0VPmn5jgxJsxxQgPcCfqDag1kDZoow/exec',
+  whatsapp: '8801345245819', whatsappShown: '+880 1345-245819', email: 'wadi.nayeemabrar@gmail.com',
+  message: 'Assalamu Alaikum! I would like a free access code for Likhi.\nName:\nInstitution:\nPhone number:',
+  days: 30, idleDays: 7
+};
+const DAYm = 86400000;
+const accessUrl = () => { const n = typeof newsCache === 'function' && newsCache(); return n && /^https:\/\/script\.google\.com\//.test(n.accessUrl || '') ? n.accessUrl : ACCESS.url; };
+const waLink = () => `https://wa.me/${ACCESS.whatsapp}?text=${encodeURIComponent(ACCESS.message)}`;
+const mailLink = () => `mailto:${ACCESS.email}?subject=${encodeURIComponent('Likhi access code')}&body=${encodeURIComponent(ACCESS.message)}`;
+const accessPlatform = () => window.likhiDesktop ? 'windows' : (typeof NATIVE !== 'undefined' && NATIVE) ? 'android' : 'web';
+function deviceId() {
+  let id = LS.get('deviceId', null);
+  if (!id) { const r = new Uint8Array(6); crypto.getRandomValues(r); id = { windows: 'w', android: 'a', web: 'web' }[accessPlatform()] + ':' + [...r].map(b => b.toString(16).padStart(2, '0')).join(''); LS.set('deviceId', id); }
+  return id;
+}
+const accessState = () => { const a = LS.get('access', null); return a && a.phone && a.loginAt ? a : null; };
+const normPhoneBD = v => { let d = String(v || '').replace(/\D/g, ''); if (d.startsWith('880')) d = '0' + d.slice(3); else if (d.length === 10 && d[0] === '1') d = '0' + d; return d; };
+// tests of the app itself (a local file opened with ?test) skip the login
+const accessSkipped = () => location.protocol === 'file:' && /[?&]test\b/.test(location.search);
+
+// still allowed to use Likhi without logging in again?
+function accessValid(a, t = Date.now()) {
+  if (!a) return false;
+  if (t - a.loginAt > ACCESS.days * DAYm) return false;          // the month is up
+  if (t - (a.lastUsed || a.loginAt) > ACCESS.idleDays * DAYm) return false;  // not used for 7 days
+  return true;
+}
+// keep "last used" fresh while Likhi is open (so 7 days counts from the last real use)
+function touchAccess() { const a = accessState(); if (a) { a.lastUsed = Date.now(); LS.set('access', a); } }
+setInterval(touchAccess, 10 * 60 * 1000);
+document.addEventListener('pointerdown', (() => { let last = 0; return () => { if (Date.now() - last > 60000) { last = Date.now(); touchAccess(); } }; })(), true);
+
+async function callAccess(action, phone, code) {
+  const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 20000);
+  try {
+    const r = await fetch(accessUrl(), { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, signal: ctl.signal, redirect: 'follow',
+      body: JSON.stringify({ action, phone, code, device: deviceId(), platform: accessPlatform(), version: APP_VERSION }) });
+    if (!r.ok) throw new Error('http ' + r.status);
+    return await r.json();
+  } finally { clearTimeout(t); }
+}
+
+// shown before anything else when a login is needed; resolves once Likhi may be used
+function accessGate() {
+  if (App.overlay || accessSkipped()) return Promise.resolve();
+  const a = accessState();
+  if (accessValid(a)) { touchAccess(); return Promise.resolve(); }
+  return new Promise(resolve => showLogin(a, resolve));
+}
+function showLogin(prev, done) {
+  const g = document.createElement('div'); g.id = 'gate'; g.setAttribute('role', 'dialog'); g.setAttribute('aria-label', 'Log in to Likhi');
+  let qr = ''; try { qr = QR.svg(waLink(), 190); } catch (e) {}
+  const why = !prev ? '' : (Date.now() - prev.loginAt > ACCESS.days * DAYm) ? 'Your monthly login has ended — please log in again with the same phone number and code.' : 'You haven’t used Likhi for a week — please log in again.';
+  g.innerHTML = `<div class="gbox">
+    <div class="glogo"><svg width="46" height="46" viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="2" width="40" height="40" rx="10" fill="#1F4D3A"/><path d="M11 30 C15 18, 19 14, 21 24 S 28 30, 33 14" stroke="#F7F3E8" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="33" cy="14" r="3" fill="#F2C94C"/></svg><div><b>likhi</b><small>${APP_CREDITS.tagline}</small></div></div>
+    <h2>Likhi is free for everyone.</h2>
+    <p class="gsub">To get your free access code, contact us on WhatsApp or email.</p>
+    <div class="gcontact">${qr ? `<div class="gqr">${qr}<small>Scan with your phone to message us on WhatsApp</small></div>` : ''}
+      <div class="gbtns"><a class="gwa" href="${waLink()}" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> WhatsApp ${ACCESS.whatsappShown}</a>
+      <a class="gmail" href="${mailLink()}" target="_blank" rel="noopener">${icon('Mail', 18)} ${ACCESS.email}</a></div></div>
+    ${why ? `<p class="gwhy">${why}</p>` : ''}
+    <form class="gform" novalidate>
+      <label>Phone number<input class="tinput" id="gPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="01XXXXXXXXX" value="${prev ? esc(prev.phone) : ''}"></label>
+      <label>Access code<input class="tinput" id="gCode" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Your access code"></label>
+      <p class="gerr" role="alert"></p>
+      <button class="gok" type="submit">Log in</button>
+    </form>
+    <p class="gfoot">${APP_VERSION_NAME} · ${APP_CREDITS.by}</p></div>`;
+  document.body.appendChild(g);
+  const P = $('#gPhone', g), C = $('#gCode', g), E = $('.gerr', g), B = $('.gok', g);
+  [P, C].forEach(i => i.addEventListener('keydown', e => e.stopPropagation()));
+  // links: the Windows app opens them in the browser / WhatsApp app
+  $$('a', g).forEach(l => l.onclick = e => { e.preventDefault(); window.open(l.href, '_blank', 'noopener'); });
+  setTimeout(() => (P.value ? C : P).focus(), 50);
+  $('.gform', g).onsubmit = async e => {
+    e.preventDefault();
+    const phone = normPhoneBD(P.value), code = C.value.trim();
+    E.textContent = '';
+    if (phone.length < 11) { E.textContent = 'Please type your phone number, for example 01712345678.'; P.focus(); return; }
+    if (!code) { E.textContent = 'Please type your access code.'; C.focus(); return; }
+    if (!/^[A-Za-z0-9!-]+$/.test(code)) { E.textContent = 'Access codes only use letters, numbers, - and !'; C.focus(); return; }
+    if (navigator.onLine === false) { E.textContent = 'Likhi needs the internet to log in. Please connect and try again.'; return; }
+    B.disabled = true; B.textContent = 'Checking…';
+    let r = null;
+    try { r = await callAccess('login', phone, code); } catch (err) { r = { ok: false, reason: 'net' }; }
+    B.disabled = false; B.textContent = 'Log in';
+    if (r && r.ok) {
+      LS.set('access', { phone, code, name: r.name || '', loginAt: Date.now(), lastUsed: Date.now() });
+      g.classList.add('out'); setTimeout(() => g.remove(), 250);
+      toast(r.name ? `Welcome, ${r.name}!` : 'Welcome to Likhi!');
+      done(); return;
+    }
+    const why = r && r.reason;
+    E.innerHTML = why === 'devices' ? `This code is already used on ${r.maxDevices || 2} devices. Please contact us to add this device.`
+      : why === 'inactive' ? 'This access has been turned off. Please contact us.'
+      : why === 'wait' ? 'Too many tries. Please wait 15 minutes, or contact us.'
+      : why === 'net' ? 'Could not reach the login service. Check the internet and try again.'
+      : 'That phone number and access code don’t match. Please try again, or contact us for a code.';
+  };
+}
+// Settings → Account
+function accountSection() {
+  if (accessSkipped()) return '';
+  const a = accessState(); if (!a) return '';
+  const until = new Date(a.loginAt + ACCESS.days * DAYm).toLocaleDateString([], { day: 'numeric', month: 'long', year: 'numeric' });
+  return `<h3 style="margin-top:24px">Account</h3>
+    <div class="set-row"><div class="t">${a.name ? esc(a.name) : 'Logged in'}<small>${esc(a.phone)} · login valid until ${until} (or 7 days without using Likhi)</small></div><button class="wide danger" style="width:auto;padding:0 16px" id="sLogout">Log out</button></div>`;
+}
+async function logOut() {
+  const a = accessState();
+  if (!(await confirmBox('Log out of Likhi?', 'Your boards stay safe on this device. You’ll need your phone number and access code to log in again.', 'Log out', true))) return;
+  try { if (App.board.id) { clearTimeout(saveTimer); await saveBoardNow(true); } } catch (e) {}
+  if (a && navigator.onLine !== false) { try { await callAccess('logout', a.phone, a.code); } catch (e) {} }   // frees this device's slot
+  LS.set('access', null);
+  location.reload();
+}
 
 // ---- 09-main.js ----
 // ===== Startup =====
@@ -5675,10 +5827,12 @@ async function start() {
   buildTopbar(); buildDock(); buildOverlayBar(); buildZoombar(); buildPagebar(); applySettings();
   if (App.overlay) { document.documentElement.style.background = 'transparent'; App.views.set(curPage().id, { x: 0, y: 0, zoom: 1 }); }
   setTool('pen'); resize();
+  if (!App.overlay) await accessGate();          // 2.0.1: free access login (when needed)
   await bootBoards();
   refreshPagebar(); refreshZoombar(); refreshDock(); invalidate(true);
+  if (!App.overlay) checkNews(false);            // news and updates show straight away, on the dashboard too
 }
-window.Likhi = { App, checkNews, refreshSelbar, openColorPicker, penSoundStart, penSoundUpdate, penSoundStop, renameBoard, deleteBoard, restoreBoard, purgeTrash, BLACKBOARD, saveToFile, closeBoard, confirmLeave, isDirty, markSaved, openFile, choiceBox, openSettings, showDashboard, hideDashboard, createBoard, openBoardById, boardIndex, buildDocx, buildPptx, buildNotes, filesToPages, unzip, saveBoardNow, speedTest, buildPDF, renderPageCanvas, insertPdf, insertImages, boardData, openBoardFile, loadPdfJs, invalidate, handles, recognize, instHandles, lasersCount: () => lasers.length, undo, redo, setTool, goPage, addPage, setBg, view, toWorld, serializeDoc, loadDoc };
+window.Likhi = { App, checkNews, accessGate, accessValid, refreshSelbar, openColorPicker, penSoundStart, penSoundUpdate, penSoundStop, renameBoard, deleteBoard, restoreBoard, purgeTrash, BLACKBOARD, saveToFile, closeBoard, confirmLeave, isDirty, markSaved, openFile, choiceBox, openSettings, showDashboard, hideDashboard, createBoard, openBoardById, boardIndex, buildDocx, buildPptx, buildNotes, filesToPages, unzip, saveBoardNow, speedTest, buildPDF, renderPageCanvas, insertPdf, insertImages, boardData, openBoardFile, loadPdfJs, invalidate, handles, recognize, instHandles, lasersCount: () => lasers.length, undo, redo, setTool, goPage, addPage, setBg, view, toWorld, serializeDoc, loadDoc };
 start();
 
 })();</script>
